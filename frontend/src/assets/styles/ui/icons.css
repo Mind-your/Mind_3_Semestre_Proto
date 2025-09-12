@@ -1,0 +1,22 @@
+@import url("../main.css");
+
+/* UI de icones -------------------*/
+
+.icon-ui{
+    background-color: var(--green-light-default-100);
+    color: var(--white-default-100);
+    box-sizing: content-box;
+    border-radius:5px;
+    font-size: 1.9rem;
+    margin-top:3px;
+    width:28px;
+    height:28px;
+    padding:5px 8px 10px 8px;
+    cursor: pointer;
+    border:none;
+    align-items: center;
+}
+
+.icon-ui:hover{
+    background-color: var(--green-default-100);
+}

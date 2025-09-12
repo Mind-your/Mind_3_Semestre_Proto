@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+:root {
+
+    /* Cores ---------------------- */
+    
+    --dark-100: #000;
+    --black-default-100: #16120d;
+    --white-default-100: #fbfbfb;
+    --orange-default-100: #f8a764;
+    --bege-default-100: #f5e0a5;
+    --blue-default-100: #7cb5ff;
+    --red-default-100: #d46240;
+    --green-default-100: #1c5841;
+    --green-light-default-100: #017d50;
+
+    --deep-cerulean-100: #006bb3;
+    --azure-radiance-100: #0090ef;
+    --periwinkle-100: #c6dbff;
+
+    --walnut-100: #6d4217;
+    --paarl-100: #9c6125;
+    --brandy-punch-100: #ce8134;
+    --rajah-100: #f8a764;
+    --dairy-cream-100: #fbdac8;
+
+    --clinker-100: #39150b;
+    --metallic-copper-100: #692d1b;
+    --paarl-100: #9d472d;
+    --red-damask-100: #d46240;
+    --apricot-100: #ef917d;
+    --mandys-pink-100: #f5c6bf;
+
+    /* Tamanhos ----------------- */
+
+    --spacing-xl: 60px;
+    --spacing-lg: 40px;
+    --spacing-md: 30px;
+    --spacing-sm: 20px;
+    --spacing-xs: 10px;
+    --border-radius-md: 10px;
+    --border-radius-sm: 5px
+}
+
+a{
+    text-decoration: none;
+}
