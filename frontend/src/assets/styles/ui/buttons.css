@@ -1,0 +1,69 @@
+@import url("../main.css");
+
+/* Navbar button */
+.nav-btn-login{
+    background-color: var(--white-default-100);
+    color: var(--dark-100);
+    padding:10px 29px;
+    font-weight: 600;
+    font-size: 1.2rem;
+    border: 3px solid var(--green-default-100);
+;
+    border-radius:50px;
+    cursor: pointer;
+}
+
+.nav-btn-login:hover{
+    background-color: #daf7eb;
+}
+
+/* Button (confirmação) */
+
+.button-confirm{
+    background-color: var(--green-default-100);
+    color: var(--white-default-100);
+    padding:10px 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.button-confirm:hover{
+    background-color:var(--green-light-default-100);
+}
+
+/* Botão (processeguir) */
+
+.button-proceed{
+    background-color: var(--orange-default-100);
+    color: var(--black-default-100);
+    padding:10px 20px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.button-proceed:hover{
+    background-color: #F5B37C;
+}
+
+/* Botão (atenção) */
+
+/* Botão (Planos)  */
+
+.button-planos{
+    font-size: clamp(1rem, 5vw, 1.4rem);
+    background-color: var(--white-default-100);
+    border: none;
+    padding:10px 20px;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.button-planos:hover{
+    background-color: #D6D6D6;
+}
