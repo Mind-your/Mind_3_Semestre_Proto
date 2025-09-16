@@ -1,0 +1,69 @@
+@import url("./main.css");
+@import url("../styles/ui/buttons.css");
+
+section {
+    display: flex;
+    align-items: center;
+}
+
+section img {
+    width: 50%;
+}
+
+.container-input-login {
+    width: 50%;
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+
+    & h1{
+        font-weight: 100px;
+    }
+    & .inputs {
+        margin-top: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        & .login-titulo {
+            width: 100%;
+            text-transform: uppercase;
+            right: 10px;
+            color: rgb(0, 0, 0);
+            display: flex;
+            flex-direction: column;
+            flex-direction: row;
+            padding: 5px;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        & input {
+            padding: 15px;
+            border: 1px solid var(--black-default-100);
+            outline: none;
+            font-size: 15px;
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        & .container-cadastrar-entrar {
+            display: flex;
+            align-items: center;
+            padding-top: 2em;
+            margin: auto;
+            position: relative;
+            column-gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        & .link-cadastro {
+            padding: 10px 25px;
+
+        }
+
+    }
+}

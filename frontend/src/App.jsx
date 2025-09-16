@@ -15,6 +15,7 @@ import AddArtigos from './pages/AddArtigos'
 import Configuracoes from './pages/Configuracoes'
 import TermosCondicoes from './pages/TermosCondicoes'
 import VideoChamada from './pages/VideoChamada'
+import Cadastro from './pages/Cadastro'
 
 export default function App() {
 
@@ -32,6 +33,7 @@ export default function App() {
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/configuracoes' element={<Configuracoes />}/>
           <Route path='/termos-e-condicoes' element={<TermosCondicoes />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/video-chamada' element={<VideoChamada />}/>
+          <Route path='/cadastro' ellement={<Cadastro />}/>
         </Route>
       </Route>
     ])
