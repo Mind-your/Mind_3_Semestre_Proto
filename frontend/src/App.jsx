@@ -27,13 +27,16 @@ export default function App() {
           <Route path='/home' element={<Home />}/>
           <Route path='/artigos' element={<Artigos />}/>
           <Route path='/login' element={<Login />}/>
+          <Route path='/login=0'element={<Login />}/>
+          <Route path='/login=1'element={<Login />}/>
+          <Route path='/login=2'element={<Login />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id' element={<Perfil />}/>
           <Route path='/sobre-nos' element={<SobreNos />}/>
           <Route path='adicionar-artigos' element={<AddArtigos />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/configuracoes' element={<Configuracoes />}/>
           <Route path='/termos-e-condicoes' element={<TermosCondicoes />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/video-chamada' element={<VideoChamada />}/>
-          <Route path='/cadastro' ellement={<Cadastro />}/>
+          <Route path='/cadastro' element={<Cadastro />}/>
         </Route>
       </Route>
     ])
