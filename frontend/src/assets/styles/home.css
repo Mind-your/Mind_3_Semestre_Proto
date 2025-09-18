@@ -1,0 +1,183 @@
+@import url("./main.css");
+@import url("./ui/buttons.css");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Card Col ------------------- */
+
+.card-psi{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background:linear-gradient(to bottom, 
+               grey 20%,
+              var(--bege-default-100) 20%); 
+    padding: 20px;
+    gap: 10px;
+}
+div.card-psychologist{
+    width:450px;
+    height:200px;
+}
+div.general-info{
+    padding:25px;
+    gap:10px;
+    display: flex;
+    height:100%;
+}
+div.infos-psi{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.infos-psi h1{
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+.infos-psi p{
+    font-size: .8rem;
+    margin:4px 0;
+}
+
+div.tags{
+    display:flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width:150px
+}
+a.psi-stats{
+    background-color: var(--color-03);
+    font-size: .7rem;
+    color: var(--font-01) !important;
+    border-radius:5px;
+    padding:2px 4px;
+}
+.psi-foto-perfil{
+    width:100px;
+    height:100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.psi-foto-perfil img{
+    width:100%;
+    height: 100%;
+    object-fit:cover;
+    border-radius:100%;
+}
+.local-info{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+
+/*------------FILTRO------------- */
+.filtro{
+    padding:0;
+}
+.hm-btn-buscar {
+    position: relative;
+    font-size: medium;
+    font-weight: 500;
+    padding: 0.6em 1em;
+    border-radius: 0.4em;
+    border: none;
+    color: var(--font-01);
+    background-color: #1C5841;
+    transition: background-color 0.1s;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    width:175px;
+}
+.hm-btn-buscar:hover {
+    background-color: var(--color-04);
+    transition: background-color 0.25s;
+}
+.checkbox{
+    position: relative;
+    width: 176px;
+    background: #1C5841;
+    display: flex;
+    flex-direction: column;
+    top: 110%;
+    display: none;
+    padding:6px;
+    padding-left:0;
+    border-radius:10px;
+    z-index:100;
+}
+#filtro-checkbox {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+    display: block;
+    cursor: pointer;
+}
+#filtro-checkbox.show {
+    transform: scaleY(1);
+    opacity: 1;
+}
+#seta-checkbox {
+    filter: invert();
+    transition: transform 0.3s ease;
+    width:28px;
+    height:28px;
+    margin-bottom:-1px;
+}
+.checkbox-input input{
+    display: none;
+    cursor: pointer;
+}
+.checkbox-input input + label:before{
+    content: '';
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    margin: 0;
+    right: 3%;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid var(--color-04);
+}
+.checkbox-input input:checked + label:before{
+    background-color: var(--color-04);
+    transition: 80ms;
+}
+.checkbox-input{
+    cursor: pointer;
+}
+.titulo-checkbox{
+    font-size: 80%;
+    padding: 0.5rem;
+    margin: 0;
+    color: #ffffff;
+    font-family: 'poppins';
+    width: 100%;
+    cursor: pointer;
+}
