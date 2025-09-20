@@ -23,7 +23,7 @@ export default function Section() {
         {
             nome: "Matheus",
             local: "SBC - SP",
-            tags: ["Casais", "Socialidade"] // Corrigido para "Casais"
+            tags: ["Casais", "Socialidade"]
         },
         {
             nome: "Alice",
@@ -52,8 +52,12 @@ export default function Section() {
             || selectedLocals.includes(perfil.local);
         return matchEspecialidade && matchLocal;
     });
+    // Pesquisa
+
+    
 
     return (
+
         <>
 
             <section className="section-home">
@@ -62,8 +66,11 @@ export default function Section() {
                     <FaSearch class="button-search" />
                 </div>
                 <div className="body-section">
+                    
                     <div className="visualizacao-filtros">
+                        
                         <div className="filtros">
+                        
                             <Filtro
                                 selectedSpecialities={selectedSpecialities}
                                 setSelectedSpecialities={setSelectedSpecialities}

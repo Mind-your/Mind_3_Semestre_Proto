@@ -24,6 +24,7 @@ export default function Filtro({ selectedSpecialities, setSelectedSpecialities }
 
   return (
     <div className="filtro">
+      <h1>Filtragem</h1>
       <button type="button" className="button-buscar" onClick={AbrirFiltro}>
         Filtro{" "}
         <HiChevronRight className="seta-filtro" id="seta-checkbox"/>

@@ -1,6 +1,11 @@
+import Section from'../components/perfil-page/section'
+
 export default function Perfil() {
     
   return (
-    <div>Perfil</div>
+    <>
+     <Section/>
+    </>
+   
   )
 }

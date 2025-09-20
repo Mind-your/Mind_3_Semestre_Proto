@@ -5,6 +5,7 @@ import '../../assets/styles/home.css';
 
 
 export default function Visualizacao({ visualizacao, setVisualizacao }) {
+    
     return (
         <>
             <div className="container-visualizacao">
