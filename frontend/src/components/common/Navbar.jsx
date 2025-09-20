@@ -79,9 +79,9 @@ function NavDesktop(){
 
                     <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
                         <div className="nav-login-drop">
-                            <Link to="/login"><button type="button">Paciente</button></Link>
-                            <Link to="/login"><button type="button">Psicólogo</button></Link>
-                            <Link to="/login"><button type="button">Voluntário</button></Link>
+                            <Link to="/login=0"><button type="button">Paciente</button></Link>
+                            <Link to="/login=1"><button type="button">Psicólogo</button></Link>
+                            <Link to="/login=2"><button type="button">Voluntário</button></Link>
                         </div>
                     </div>
                 </div>
