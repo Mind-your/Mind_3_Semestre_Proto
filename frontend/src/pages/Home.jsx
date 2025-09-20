@@ -1,12 +1,13 @@
-import CardCol from "../components/home-page/card-col"
-import Filtro from "../components/home-page/filtro"
+import Section from "../components/home-page/section";
+
 
 export default function Home() {
-    
+ 
+
   return (
     <>
-      <Filtro/>
-      <CardCol/>
+      <Section />
+      
     </>
-  )
+  );
 }
