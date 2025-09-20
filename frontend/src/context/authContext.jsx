@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { loginUser, registerUser } from "../services/pacienteService";
 
-export function useAuth() {
+const AuthContext = createContext();
+
+
+export function AuthProvider({ children }) {
     const [user, setUser] = useState(() => {
         const saved = localStorage.getItem("user");
         return saved ? JSON.parse(saved) : null;
     });
-
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -26,6 +28,7 @@ export function useAuth() {
         }
     }
 
+
     async function register(nome, email, senha) {
         setLoading(true);
         setError("");
@@ -42,10 +45,19 @@ export function useAuth() {
         }
     }
 
+
     function logout() {
         setUser(null);
         localStorage.removeItem("user");
     }
 
-    return { user, loading, error, login, register, logout };
+    return (
+        <AuthContext.Provider value={{ user, loading, error, login, register, logout }}>
+            {children}
+        </AuthContext.Provider>
+    );
+}
+
+export function useAuth() {
+    return useContext(AuthContext);
 }

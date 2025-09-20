@@ -2,31 +2,19 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 import background from "../../assets/img/background_input.png";
 import "../../assets/styles/input_login.css";
-import { loginUser } from "../../services/pacienteService";
+import { useAuth } from "../../context/authContext";
 
 export default function LoginPage() {
-  const [form, setForm] = useState({ login: "", senha: "" });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+    const { login, error, loading } = useAuth();
+    const [form, setForm] = useState({ login: "", senha: "" });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const ok = await login(form.login, form.senha);
+        if (ok) window.location.href = "/home";
+    };
 
-    try {
-      const data = await loginUser(form.login, form.senha);
-      console.log("Login bem-sucedido:", data);
-      navigate("/home");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
+    return (
     <section>
       <img className="background" src={background} alt="Imagem inicial do site" />
       <div className="container-input-login">
