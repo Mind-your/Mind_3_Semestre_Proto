@@ -4,7 +4,7 @@ import {
   HiOutlineUserGroup, 
   HiOutlineEye } from "react-icons/hi";
 
-import "../../assets/styles/caracteristicas.css"
+import "../../assets/styles/landing-page/caracteristicas.css"
 
 export default function Caracteristicas() {
 

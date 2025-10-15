@@ -14,9 +14,18 @@ export default function Footer() {
                     <Link to=""><p>Entre para nosso time</p></Link>
                 </div>
                 <div>
-                    <Link to="/planos"><p>Planos</p></Link>
-                    <Link to="/atribuicoes"><p>Atribuições</p></Link>
-                    <Link to="/artigos">Canal de denúncia</Link>
+                    <Link 
+                        to="/"
+                        onClick={(e) => {
+                            if (window.location.pathname === "/") {
+                                e.preventDefault();
+                                document.getElementById('planos')?.scrollIntoView({ 
+                                    behavior: 'smooth' 
+                                });
+                            }
+                        }}><p>Planos</p></Link>
+                    <Link to="/:tipo(paciente|psicologo)/perfil/:id/configuracoes"><p>Atribuições</p></Link>
+                    <Link to="/adicionar-artigos">Canal de denúncia</Link>
                     <p>Contatos:</p>
                     <div className="icon-btns">
                         <button className="icon-btn icon-ui">

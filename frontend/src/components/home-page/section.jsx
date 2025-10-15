@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 import { useState } from "react";
-import fotoPsi from '../../assets/img/icon-streaming.png'
+import fotoPsi from '../../assets/img/perfil-default.png'
 import '../../assets/styles/home.css';
 import Visualizacao from "./visualizacao";
 import Filtro from "./filtro";

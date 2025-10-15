@@ -3,18 +3,21 @@
 /* UI de icones -------------------*/
 
 .icon-ui{
-    background-color: var(--green-light-default-100);
+    background-color: var(--sea-green-100);
     color: var(--white-default-100);
     box-sizing: content-box;
-    border-radius:5px;
+    border-radius: var(--spacing-xs);
     font-size: 1.9rem;
-    margin-top:3px;
+    margin-top:2px;
     width:28px;
     height:28px;
-    padding:5px 8px 10px 8px;
+    padding:7px;
     cursor: pointer;
     border:none;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .icon-ui:hover{

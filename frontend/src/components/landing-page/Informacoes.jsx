@@ -1,5 +1,5 @@
 import { HiArrowNarrowUp } from "react-icons/hi";
-import "../../assets/styles/infos.css"
+import "../../assets/styles/landing-page/infos.css"
 import { Link } from "react-router"
 
 export default function Informacoes() {

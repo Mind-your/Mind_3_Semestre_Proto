@@ -5,7 +5,7 @@ import '../../assets/styles/input_login.css';
 export default function InputLogin() {
     return (
         <>
-            <section id="">
+            <section className="login-inputs">
                 <img className="background" src={background} alt="Imagem inicial do site" />
                 <div className="container-input-login">
                     <h1>Entrar</h1>

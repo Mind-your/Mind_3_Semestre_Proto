@@ -4,6 +4,10 @@ import {
   createRoutesFromElements, 
   RouterProvider } from 'react-router'
 
+import "../src/assets/styles/main.css"
+import "../src/assets/styles/ui/buttons.css";
+import "../src/assets/styles//ui/icons.css"
+
 import MainLayout from './layout/MainLayout'
 import LandingPage from './pages/LandingPage'
 import Home from './pages/Home'
@@ -32,7 +36,7 @@ export default function App() {
           <Route path='/login=2'element={<Login />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id' element={<Perfil />}/>
           <Route path='/sobre-nos' element={<SobreNos />}/>
-          <Route path='adicionar-artigos' element={<AddArtigos />}/>
+          <Route path='/adicionar-artigos' element={<AddArtigos />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/configuracoes' element={<Configuracoes />}/>
           <Route path='/termos-e-condicoes' element={<TermosCondicoes />}/>
           <Route path='/:tipo(paciente|psicologo)/perfil/:id/video-chamada' element={<VideoChamada />}/>

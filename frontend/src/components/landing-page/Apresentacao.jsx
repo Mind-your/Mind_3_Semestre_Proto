@@ -1,6 +1,6 @@
 import { Link } from "react-router"
 import apresentacao from "../../assets/img/home_img_3.svg"
-import '../../assets/styles/hero-apresentacao.css';
+import '../../assets/styles/landing-page/hero-apresentacao.css';
 
 export default function Apresentacao() {
   return (
@@ -16,7 +16,7 @@ export default function Apresentacao() {
             </div>
             <span className="btn-article">
               <Link to="/sobre-nos">
-                <button className="conhecer-btn button-proceed">Conhecer</button>
+                <button className="conhecer-btn button-confirm">Conhecer</button>
               </Link>
             </span>
           </article>

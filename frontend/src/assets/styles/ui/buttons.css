@@ -2,14 +2,15 @@
 
 /* Navbar button */
 .nav-btn-login{
+    box-sizing: border-box;
     background-color: var(--white-default-100);
     color: var(--dark-100);
-    padding:10px 29px;
+    padding:7px 29px;
     font-weight: 600;
     font-size: 1.2rem;
     border: 3px solid var(--green-default-100);
 ;
-    border-radius:50px;
+    border-radius: var(--spacing-xs);
     cursor: pointer;
 }
 
@@ -23,7 +24,7 @@
     background-color: var(--green-default-100);
     color: var(--white-default-100);
     padding:10px 25px;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.1rem;
     border: none;
     border-radius: var(--border-radius-md);
@@ -31,14 +32,31 @@
 }
 
 .button-confirm:hover{
-    background-color:var(--green-light-default-100);
+    background-color:var( --sea-green-100);
 }
 
 /* Botão (processeguir) */
 
 .button-proceed{
-    background-color: var(--orange-default-100);
+    background-color: var(--red-default-100);
     color: var(--black-default-100);
+    padding:10px 20px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.button-proceed:hover{
+    background-color: var(--paarl-100);
+}
+
+/* Botão (atenção) */
+
+.button-attention{
+    background-color: var(--metallic-copper-100);
+    color: var(--white-default-100);
     padding:10px 20px;
     font-weight: 500;
     font-size: 1.1rem;
@@ -47,13 +65,11 @@
     cursor: pointer;
 }
 
-.button-proceed:hover{
-    background-color: #F5B37C;
+.button-attention:hover{
+    background-color: rgb(85, 35, 21);
 }
 
-/* Botão (atenção) */
-
-/* Botão (Planos)  */
+/* Botão ("Planos")  */
 
 .button-planos{
     font-size: clamp(1rem, 5vw, 1.4rem);
@@ -66,4 +82,42 @@
 
 .button-planos:hover{
     background-color: #D6D6D6;
+}
+
+/* Botão ("Cancelar") */
+
+.button-cancelar{
+    background-color: var(--dove-gray-100);
+    color: var(--white-default-100);
+    padding:10px 20px;
+    font-weight: 500;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+}
+
+.button-cancelar:hover{
+    background-color: var(--mine-shaft01-100);
+}
+
+/* Botão de ("Voltar") e ("Mais") */
+
+.button-open-pop-up{
+    background-color: var(--alto-100);
+    color: var(--dark-100);
+    padding:10px 20px;
+    font-weight: 500;
+    font-size: 1rem;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    display:flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+    width: max-content;
+}
+
+.button-open-pop-up:hover{
+    background-color: var(--silver-chalice-100);
 }

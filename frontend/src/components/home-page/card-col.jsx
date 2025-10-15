@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import fotoPsi from '../../assets/img/icon-streaming.png'
+import fotoPsi from '../../assets/img/perfil-default.png'
 import '../../assets/styles/home.css';
 
 

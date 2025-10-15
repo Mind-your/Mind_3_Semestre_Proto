@@ -1,9 +1,10 @@
 import '../../assets/styles/navbar-footer.css'
 import logotipo from "../../assets/img/logotipo.svg"
 
-import { NavLink, Link } from 'react-router'
+import NavDesktop from './NavbarDesktop'
+import NavMobile from './NavbarMobile'
+import { NavLink } from 'react-router'
 import { useState, useEffect } from 'react'
-import { HiOutlineUser, HiOutlineSearch } from "react-icons/hi";
 
 export default function Navbar() {
     const [resize, setResize] = useState(true);
@@ -28,73 +29,3 @@ export default function Navbar() {
         </>
     )
 }
-
-//  Links do Navbar versão desktop
-
-function NavDesktop(){
-    const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isLoggedIn, setLoggedIn] = useState(false)
-
-    return (
-        <>
-            <nav id="nav-desktop">
-                <ul>
-                    <NavLink id="linkSobreNos" to="/sobre-nos">
-                        <li>Sobre nós</li>
-                    </NavLink>
-                    <NavLink id="linkPlanos" to="#planos">
-                        <li>Planos</li>
-                    </NavLink>
-                    <NavLink id="linkArtigos" to="/artigos">
-                        <li>Artigos</li>
-                    </NavLink>
-
-                    {/* Se o usuario estiver logado, aparecerá o navbar personalizado */}
-                    {isLoggedIn ? (
-                        <>
-                            <NavLink to="/home">
-                                <HiOutlineSearch 
-                                    id="search-icon-btn"
-                                    className="icon-ui"/>
-                            </NavLink>
-                            <NavLink to="/:tipo(paciente|psicologo)/perfil/:id">
-                                <HiOutlineUser 
-                                    id="user-icon-btn" 
-                                    className="icon-ui"/>
-                            </NavLink>
-                        </>
-                    ) : (
-                        ""
-                    )}
-                </ul>
-
-                {/* DropDown */}
-                <div 
-                    className="nav-right-buttons">
-                    <button 
-                        type="button" 
-                        className="nav-btn-login"
-                        onClick={() => setDropdownOpen(prev => !prev)}
-                    >login</button>
-
-                    <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
-                        <div className="nav-login-drop">
-                            <Link to="/login=0"><button type="button">Paciente</button></Link>
-                            <Link to="/login=1"><button type="button">Psicólogo</button></Link>
-                            <Link to="/login=2"><button type="button">Voluntário</button></Link>
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </>
-    )
-}
-
-function NavMobile(){
-    return (
-        <>
-        
-        </>
-    )
-}
-

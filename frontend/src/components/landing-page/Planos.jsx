@@ -1,4 +1,4 @@
-import "../../assets/styles/planos.css";
+import "../../assets/styles/landing-page/planos.css";
 
 export default function Planos() {
 

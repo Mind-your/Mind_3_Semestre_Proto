@@ -1,13 +1,21 @@
 ## Instalação de dependencias
 
 ```
+// Se estiver na pasta de frontend
 npm i
+
+// Se estiver no root principal
+nom run i:frontend
 ```
 
 ## Para rodar servidor
 
 ``` 
+// Se estiver na pasta de frontend
 npm run dev
+
+// Se estiver no root principal
+npm run dev:frontend
 ```
 
 ## Tecnologias

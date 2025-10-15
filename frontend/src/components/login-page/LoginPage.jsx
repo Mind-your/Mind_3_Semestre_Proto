@@ -15,7 +15,7 @@ export default function LoginPage() {
     };
 
     return (
-    <section>
+    <section className="login-inputs">
       <img className="background" src={background} alt="Imagem inicial do site" />
       <div className="container-input-login">
         <h1>Entrar</h1>

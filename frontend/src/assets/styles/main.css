@@ -15,27 +15,44 @@
     --white-default-100: #fbfbfb;
     --orange-default-100: #f8a764;
     --bege-default-100: #f5e0a5;
-    --blue-default-100: #7cb5ff;
+    --green-light-default-100: #a7e293;
     --red-default-100: #d46240;
     --green-default-100: #1c5841;
-    --green-light-default-100: #017d50;
 
-    --deep-cerulean-100: #006bb3;
-    --azure-radiance-100: #0090ef;
-    --periwinkle-100: #c6dbff;
+    --hunter-green-100: #182514;
+    --green-kelp-100: #31462a;
+    --deep-cerulean-100: #4C6A42;
+    --azure-radiance-100: #69905C;
+    --olivine-100: #87b877;
+    --periwinkle-100: #A7E293;
+    --feta-100: #ddf8d6;
+    --lime-light-100: #e7ffe0;
 
     --walnut-100: #6d4217;
     --paarl-100: #9c6125;
     --brandy-punch-100: #ce8134;
-    --rajah-100: #f8a764;
     --dairy-cream-100: #fbdac8;
 
     --clinker-100: #39150b;
     --metallic-copper-100: #692d1b;
     --paarl-100: #9d472d;
-    --red-damask-100: #d46240;
     --apricot-100: #ef917d;
     --mandys-pink-100: #f5c6bf;
+
+    --green-pea-100: #1c5841;
+    --sea-green-100: #2c7e5f;
+    --ocean-green-100: #3ca77e;
+    --shamrock-100: #4ed19f;
+    --aquamarine-100: #77fbc5;
+
+    --mine-shaft-100: #212121;
+    --mine-shaft01-100: #404040;
+    --dove-gray-100: #656565;
+    --gray-100: #868686;
+    --silver-chalice-100: #ababab;
+    --alto-100: #d2d2d2;
+    --alabaster-100: #f7f7f7;
+    --grayish-white-100: #ebebeb;
 
     /* Tamanhos ----------------- */
 
@@ -44,6 +61,7 @@
     --spacing-md: 30px;
     --spacing-sm: 20px;
     --spacing-xs: 10px;
+    --border-radius-lg: 20px;
     --border-radius-md: 10px;
     --border-radius-sm: 5px
 }
