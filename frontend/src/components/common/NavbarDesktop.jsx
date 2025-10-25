@@ -1,10 +1,17 @@
-import { NavLink, Link, useParams } from 'react-router'
+import { NavLink, Link, useNavigate } from 'react-router'
 import { useState } from 'react'
 import { HiOutlineUser, HiOutlineSearch } from "react-icons/hi";
+import { useAuth } from '../../context/authContext';
 
 export default function NavDesktop(){
     const [isDropdownOpen, setDropdownOpen] = useState(false);
-    const [isLoggedIn, setLoggedIn] = useState(false)
+    const { user, isAuthenticated, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    };
 
     return (
         <>
@@ -31,14 +38,14 @@ export default function NavDesktop(){
                     </NavLink>
 
                     {/* Se o usuario estiver logado, aparecerá o navbar personalizado */}
-                    {isLoggedIn ? (
+                    {isAuthenticated ? (
                         <>
                             <NavLink to="/home">
                                 <HiOutlineSearch 
                                     id="search-icon-btn"
                                     className="icon-ui"/>
                             </NavLink>
-                            <NavLink to="/:tipo(paciente|psicologo)/perfil/:id">
+                            <NavLink to={`/${user.tipo}/perfil/${user.id}`}>
                                 <HiOutlineUser 
                                     id="user-icon-btn" 
                                     className="icon-ui"/>
@@ -50,22 +57,51 @@ export default function NavDesktop(){
                 </ul>
 
                 {/* DropDown */}
-                <div 
-                    className="nav-right-buttons">
-                    <button 
-                        type="button" 
-                        className="nav-btn-login"
-                        onClick={() => setDropdownOpen(prev => !prev)}
-                    >login</button>
+                {!isAuthenticated ? (
+                    <div className="nav-right-buttons">
+                        <button 
+                            type="button" 
+                            className="nav-btn-login"
+                            onClick={() => setDropdownOpen(prev => !prev)}
+                        >login</button>
 
-                    <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
-                        <div className="nav-login-drop">
-                            <Link to="/login"><button type="button">Paciente</button></Link>
-                            <Link to="/login"><button type="button">Psicólogo</button></Link>
-                            <Link to="/login"><button type="button">Voluntário</button></Link>
+                        <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
+                            <div className="nav-login-drop">
+                                <Link to="/login"><button type="button">Paciente</button></Link>
+                                <Link to="/login"><button type="button">Psicólogo</button></Link>
+                                <Link to="/login"><button type="button">Voluntário</button></Link>
+                            </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    // Menu quando logado
+                    <div className="nav-right-buttons">
+                        <button 
+                            type="button" 
+                            className="nav-btn-login"
+                            onClick={() => setDropdownOpen(prev => !prev)}
+                        >
+                            {user.nome}
+                        </button>
+
+                        <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
+                            <div className="nav-login-drop">
+                                <Link to={`/${user.tipo}/perfil/${user.id}`}>
+                                    <button type="button">Meu Perfil</button>
+                                </Link>
+                                <Link to={`/${user.tipo}/perfil/${user.id}/configuracoes`}>
+                                    <button type="button">Configurações</button>
+                                </Link>
+                                {user.tipo === "psicologo" && (
+                                    <Link to="/adicionar-artigos">
+                                        <button type="button">Adicionar Artigos</button>
+                                    </Link>
+                                )}
+                                <button type="button" onClick={handleLogout}>Sair</button>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </nav>
         </>
     )

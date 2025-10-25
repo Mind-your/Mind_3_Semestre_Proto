@@ -7,15 +7,20 @@ import {
   HiOutlineNewspaper, 
   HiOutlineQuestionMarkCircle 
 } from "react-icons/hi";
+import { useAuth } from '../../context/authContext';
 
 export default function NavMobile() {
   const [activeIndex, setActiveIndex] = useState(2);
+  const { user, isAuthenticated } = useAuth();
 
   const navItems = [
     { icon: <HiOutlineSearch />, to: "/home" },
     { icon: <HiOutlineNewspaper />, to: "/artigos" },
     { icon: <HiOutlineHome />, to: "/" },
-    { icon: <HiOutlineUser />, to: "/:tipo(paciente|psicologo)/perfil/:id" },
+    { 
+      icon: <HiOutlineUser />, 
+      to: isAuthenticated ? `/${user.tipo}/perfil/${user.id}` : "/login" 
+    },
     { icon: <HiOutlineQuestionMarkCircle />, to: "/sobre-nos" },
   ];
 

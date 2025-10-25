@@ -7,13 +7,22 @@ import Deletar from "../components/pop-ups/Deletar"
 import PhotoDefault from "../assets/img/perfil-default.png"
 import Horarios from "../components/configuracoes/Horarios"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router"
+import { useAuth } from "../context/authContext";
 
 export default function Configuracoes() {
+    const { user, loading } = useAuth();
     const [imgPerfil, setImgPerfil] = useState(PhotoDefault);
     const [isOpen, setIsOpen] = useState(false);
-    const {tipo} = useParams();
+    const { tipo } = useParams();
+
+    // Carregar imagem de perfil do usuário
+    useEffect(() => {
+        if (user?.imgPerfil) {
+            setImgPerfil(user.imgPerfil);
+        }
+    }, [user]);
 
     const chooseImgPerfil = (img) => {
         const file = img.target.files[0];
@@ -24,6 +33,10 @@ export default function Configuracoes() {
 
         formData.append('imagem', file);
         console.log(imageUrl);
+    }
+
+    if (loading) {
+        return <div>Carregando...</div>;
     }
 
     return (
@@ -49,7 +62,9 @@ export default function Configuracoes() {
                     <div className="atalhos">
                         <a href="#formAtualizar" id="Geral">Geral</a>
                         <a href="#container-perfil" id="Perfil">Perfil</a>
-                        <a href="#container-horario-atendimento" id="Horarios">Horarios de atendimentos</a>
+                        {user?.tipo === "psicologo" && (
+                            <a href="#container-horario-atendimento" id="Horarios">Horarios de atendimentos</a>
+                        )}
                         <a href="#deletar-conta" id="Deletar">Deletar conta</a>
                     </div>
                 </div>
@@ -59,16 +74,13 @@ export default function Configuracoes() {
                     <h1>Geral</h1>
 
                     <form action="">
-                        <InfosGerais />
-                        <AtualizacaoCredenciais />
-                        <InfosPerfil />
-                        <Horarios />
-
-                        {/* {tipo == "psicologo" ? (
+                        <InfosGerais user={user} />
+                        <AtualizacaoCredenciais user={user} />
+                        <InfosPerfil user={user} />
+                        
+                        {user?.tipo === "psicologo" && (
                             <Horarios />
-                        ) : (
-                            ""
-                        )} */}
+                        )}
 
                         <div className="container-atualizar">
                             <button id="btnAtualizarPerfil" className="button-confirm">Atualizar perfil</button>
