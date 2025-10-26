@@ -1,4 +1,4 @@
-import { Navigate } from "react-router";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
 // Componente para proteger rotas que precisam de autenticação

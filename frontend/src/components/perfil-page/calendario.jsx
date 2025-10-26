@@ -9,10 +9,10 @@ const diasSemana = ["Seg", "Ter", "Qua", "Qui", "Sex"];
 const meses = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 
 const consultasPadrao = {
-    "2025-09-18": ["12:13", "14:30"],
-    "2025-09-12": ["10:15"],
-    "2025-09-08": ["09:00", "10:00", "16:45", "12:21", "12:21", "12:21"],
-    "2025-09-09": ["21:00"]
+    "2025-10-21": ["12:13", "14:30"],
+    "2025-10-22": ["10:15"],
+    "2025-10-24": ["09:00", "10:00", "16:45", "12:21", "12:21", "12:21"],
+    "2025-10-25": ["21:00"]
 };
 
 function getSegunda(data) {
@@ -134,7 +134,6 @@ export default function Calendario() {
                             >
                                 &times;
                             </span>
-                            <label htmlFor="modal-select-dia">Selecione o dia:</label>
                             <select
                                 id="modal-select-dia"
                                 value={diaModal}
@@ -145,6 +144,7 @@ export default function Calendario() {
                                         {diasSemana[i]} - {dia.getDate().toString().padStart(2, "0")}/{meses[dia.getMonth()]}
                                     </option>
                                 ))}
+                                
                             </select>
                             <h2 id="modal-dia" style={{ display: "none" }}></h2>
                             <div id="modal-horarios">{renderHorariosModal()}</div>

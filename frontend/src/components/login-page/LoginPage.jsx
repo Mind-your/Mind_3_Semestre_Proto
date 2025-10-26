@@ -25,9 +25,10 @@ export default function LoginPage() {
         }
     }, [location.pathname]);
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
         const result = await login(form.login, form.senha);
         
         if (result.success) {
@@ -46,6 +47,12 @@ export default function LoginPage() {
                     logout(); // DESLOGAR imediatamente
                     return;
                 }
+                if (tipoUsuario === "paciente" && user.tipo !== "paciente") {
+                    alert("Este usuário não é um paciente. Use o login de psicólogo.");
+                    logout(); // DESLOGAR imediatamente
+                    return;
+                }
+            
             }
             
             // Redirecionar para home SOMENTE se passou na validação
@@ -59,8 +66,9 @@ export default function LoginPage() {
         return "Entrar - Paciente";
     };
 
+
     return (
-        <section className="login-inputs">
+     <section className="login-inputs">
             <img className="background" src={background} alt="Imagem inicial do site" />
             <div className="container-input-login">
                 <h1>{location.pathname === "/login" ? "Entrar" : getTitulo()}</h1>
@@ -104,3 +112,4 @@ export default function LoginPage() {
         </section>
     );
 }
+

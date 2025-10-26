@@ -1,9 +1,10 @@
-import { NavLink, Link, useNavigate } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { HiOutlineUser, HiOutlineSearch } from "react-icons/hi";
 import { useAuth } from '../../context/authContext';
 
-export default function NavDesktop(){
+export default function NavDesktop() {
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const { user, isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
@@ -20,14 +21,14 @@ export default function NavDesktop(){
                     <NavLink id="linkSobreNos" to="/sobre-nos">
                         <li>Sobre nós</li>
                     </NavLink>
-                    <NavLink 
-                        id="linkPlanos" 
+                    <NavLink
+                        id="linkPlanos"
                         to="/"
                         onClick={(e) => {
                             if (window.location.pathname === "/") {
                                 e.preventDefault();
-                                document.getElementById('planos')?.scrollIntoView({ 
-                                    behavior: 'smooth' 
+                                document.getElementById('planos')?.scrollIntoView({
+                                    behavior: 'smooth'
                                 });
                             }
                         }}>
@@ -41,14 +42,14 @@ export default function NavDesktop(){
                     {isAuthenticated ? (
                         <>
                             <NavLink to="/home">
-                                <HiOutlineSearch 
+                                <HiOutlineSearch
                                     id="search-icon-btn"
-                                    className="icon-ui"/>
+                                    className="icon-ui" />
                             </NavLink>
                             <NavLink to={`/${user.tipo}/perfil/${user.id}`}>
-                                <HiOutlineUser 
-                                    id="user-icon-btn" 
-                                    className="icon-ui"/>
+                                <HiOutlineUser
+                                    id="user-icon-btn"
+                                    className="icon-ui" />
                             </NavLink>
                         </>
                     ) : (
@@ -59,8 +60,8 @@ export default function NavDesktop(){
                 {/* DropDown */}
                 {!isAuthenticated ? (
                     <div className="nav-right-buttons">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className="nav-btn-login"
                             onClick={() => setDropdownOpen(prev => !prev)}
                         >login</button>
@@ -76,8 +77,8 @@ export default function NavDesktop(){
                 ) : (
                     // Menu quando logado
                     <div className="nav-right-buttons">
-                        <button 
-                            type="button" 
+                        <button
+                            type="button"
                             className="nav-btn-login"
                             onClick={() => setDropdownOpen(prev => !prev)}
                         >
@@ -86,9 +87,12 @@ export default function NavDesktop(){
 
                         <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
                             <div className="nav-login-drop">
-                                <Link to={`/${user.tipo}/perfil/${user.id}`}>
-                                    <button type="button">Meu Perfil</button>
-                                </Link>
+                                {user && (
+                                    <Link to={`/${user.tipo.toLowerCase()}/perfil/${user.id}`}>
+                                        <button type="button">Meu Perfil</button>
+                                    </Link>
+                                )}
+
                                 <Link to={`/${user.tipo}/perfil/${user.id}/configuracoes`}>
                                     <button type="button">Configurações</button>
                                 </Link>
