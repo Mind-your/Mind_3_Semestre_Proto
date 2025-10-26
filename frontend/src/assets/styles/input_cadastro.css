@@ -1,6 +1,13 @@
 @import url("./main.css");
 @import url("../styles/ui/buttons.css");
 
+section {
+    display: flex;
+    align-items: center;
+}
+.background-cadastro{
+    width: 50%;
+}
 .inputs{
     display: flex;
     flex-direction: column;

@@ -7,7 +7,7 @@ export default function inputCadastro() {
     return (
         <>
             <section id="">
-                <img className="background" src={background} alt="Imagem inicial do site" />
+                <img className="background-cadastro" src={background} alt="Imagem inicial do site" />
                 <div className="container-input-login">
                     <h1>Cadastro</h1>
                     <div className="inputs">
