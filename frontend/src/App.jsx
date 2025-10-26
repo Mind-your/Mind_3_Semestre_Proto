@@ -1,51 +1,44 @@
-import { 
-  Route, 
-  createBrowserRouter, 
-  createRoutesFromElements, 
-  RouterProvider 
-} from 'react-router';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import "../src/assets/styles/main.css";
-import "../src/assets/styles/ui/buttons.css";
-import "../src/assets/styles//ui/icons.css";
-
-import MainLayout from './layout/MainLayout';
-import LandingPage from './pages/LandingPage';
-import Home from './pages/Home';
-import Artigos from './pages/Artigos';
-import Login from './pages/Login';
-import Perfil from './pages/Perfil';
-import SobreNos from './pages/SobreNos';
-import AddArtigos from './pages/AddArtigos';
-import Configuracoes from './pages/Configuracoes';
-import TermosCondicoes from './pages/TermosCondicoes';
-import VideoChamada from './pages/VideoChamada';
-import Cadastro from './pages/Cadastro';
+import MainLayout from "./layout/MainLayout";
+import LandingPage from "./pages/LandingPage";
+import Home from "./pages/Home";
+import Artigos from "./pages/Artigos";
+import Login from "./pages/Login";
+import Perfil from "./pages/Perfil";
+import SobreNos from "./pages/SobreNos";
+import AddArtigos from "./pages/AddArtigos";
+import Configuracoes from "./pages/Configuracoes";
+import TermosCondicoes from "./pages/TermosCondicoes";
+import VideoChamada from "./pages/VideoChamada";
+import Cadastro from "./pages/Cadastro";
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorPage from './pages/ErrorPage';
 
 export default function App() {
-
-  const routes = createBrowserRouter(
-    createRoutesFromElements([
-      <Route>
-        <Route path='/' element={<MainLayout />}>
-          {/* Rotas públicas */}
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainLayout />} errorElement={<ErrorPage />}>
+        {/* Rotas públicas */}
           <Route index element={<LandingPage />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/artigos' element={<Artigos />} />
-          <Route path='/sobre-nos' element={<SobreNos />} />
-          <Route path='/termos-e-condicoes' element={<TermosCondicoes />} />
-          
+          <Route path="home" element={<Home />} />
+          <Route path="artigos" element={<Artigos />} />
+          <Route path="sobre-nos" element={<SobreNos />} />
+          <Route path="termos-e-condicoes" element={<TermosCondicoes />} />
           {/* Rotas de autenticação */}
+
           <Route path='/login' element={<Login />} />
           <Route path='/login=0' element={<Login />} />
           <Route path='/login=1' element={<Login />} />
           <Route path='/login=2' element={<Login />} />
           <Route path='/cadastro' element={<Cadastro />} />
-          
+
           {/* Rotas protegidas - requerem autenticação */}
+
+          {/* Perfil */}
           <Route 
-            path='/:tipo(paciente|psicologo)/perfil/:id' 
+            path='/:tipo/perfil/:id' 
             element={
               <ProtectedRoute>
                 <Perfil />
@@ -68,6 +61,7 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
+
           
           {/* Rota protegida apenas para psicólogos */}
           <Route 
@@ -78,12 +72,11 @@ export default function App() {
               </ProtectedRoute>
             } 
           />
+          
+          {/* Rota nao encontrada */}
+          <Route path="*" element={<ErrorPage />} />
         </Route>
-      </Route>
-    ])
-  );
-
-  return (
-    <RouterProvider router={routes} />
+      </Routes>
+    </BrowserRouter>
   );
 }

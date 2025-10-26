@@ -8,7 +8,12 @@ export default function ProtectedRoute({ children, requirePsicologo = false }) {
     // Aguardar carregamento
     if (loading) {
         return (
-            <div className="loading-container">
+            <div style={{ 
+                minHeight: "80vh", 
+                display: "flex", 
+                alignItems: "center", 
+                justifyContent: "center" 
+            }}>
                 <p>Carregando...</p>
             </div>
         );
@@ -21,7 +26,23 @@ export default function ProtectedRoute({ children, requirePsicologo = false }) {
 
     // Se a rota requer psicólogo mas o usuário não é psicólogo
     if (requirePsicologo && !isPsicologo) {
-        return <Navigate to="/home" replace />;
+        return (
+            <div style={{ 
+                padding: "2rem", 
+                textAlign: "center",
+                minHeight: "80vh",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                <h2>Acesso Restrito</h2>
+                <p>Esta área é exclusiva para psicólogos.</p>
+                <a href="/home" className="button-confirm" style={{ marginTop: "1rem" }}>
+                    Voltar para o início
+                </a>
+            </div>
+        );
     }
 
     return children;

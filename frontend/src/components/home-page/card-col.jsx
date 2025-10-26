@@ -3,7 +3,7 @@ import fotoPsi from '../../assets/img/perfil-default.png'
 import '../../assets/styles/home.css';
 
 
-export default function CardCol({ perfils }) {
+export default function CardCol({ perfils, setSelectedPerfil, setOpenPsi }) {
     return (
         <>
             {perfils.map((item, index) => (
@@ -20,12 +20,23 @@ export default function CardCol({ perfils }) {
                     </div>
                     <h1 className="tittle-conhecimentos-col">Conhecimentos</h1>
                     <div className="tags-col card-psi-body-col">
-                        
+
                         {item.tags.map((list, i) => (
                             <a key={i} data-speciality={list}>{list}</a>
                         ))}
                     </div>
-                    <button className="button-proceed button-ver">Ver</button>
+                    <div className="container-btn-ver-col">
+                        <button
+                            className="button-ver-card-psi"
+                            id="btn-abrir-pop-up"
+                            onClick={() => {
+                                if (setSelectedPerfil) setSelectedPerfil(item);
+                                if (setOpenPsi) setOpenPsi(true);
+                            }}
+                        >
+                            Ver
+                        </button>
+                    </div>
                 </div>
             ))}
         </>

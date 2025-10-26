@@ -8,14 +8,14 @@ import PhotoDefault from "../assets/img/perfil-default.png"
 import Horarios from "../components/configuracoes/Horarios"
 
 import { useState, useEffect } from "react";
-import { useParams } from "react-router"
+import { useParams, Navigate } from "react-router"
 import { useAuth } from "../context/authContext";
 
 export default function Configuracoes() {
     const { user, loading } = useAuth();
     const [imgPerfil, setImgPerfil] = useState(PhotoDefault);
     const [isOpen, setIsOpen] = useState(false);
-    const { tipo } = useParams();
+    const { tipo, id } = useParams();
 
     // Carregar imagem de perfil do usuário
     useEffect(() => {
@@ -37,6 +37,22 @@ export default function Configuracoes() {
 
     if (loading) {
         return <div>Carregando...</div>;
+    }
+    if (!user) {
+        return <Navigate to="/login" replace />;
+    }
+
+    // Verificar se está tentando acessar configurações de outro usuário
+    if (user.id !== id || user.tipo !== tipo) {
+        return (
+            <div style={{ padding: "2rem", textAlign: "center" }}>
+                <h2>Acesso Negado</h2>
+                <p>Você só pode editar suas próprias configurações.</p>
+                <a href={`/${user.tipo}/perfil/${user.id}/configuracoes`}>
+                    Ir para minhas configurações
+                </a>
+            </div>
+        );
     }
 
     return (
