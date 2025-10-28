@@ -3,7 +3,7 @@
 .container-ver-psi{
     position: fixed; 
     background-color: var(--bege-default-100);
-    width:100%;
+    width:max-content;
     min-width: 10px;
     height: auto;
     padding: 10px;

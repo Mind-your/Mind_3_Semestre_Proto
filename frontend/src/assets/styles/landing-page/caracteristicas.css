@@ -1,6 +1,8 @@
 /* Seções gerais (titulo) ------------ */
 .section{
-    margin: 7% var(--spacing-lg)
+    margin: 7% var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
 }
 
 .section > h1{

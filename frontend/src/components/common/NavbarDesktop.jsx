@@ -88,22 +88,42 @@ export default function NavDesktop() {
                         <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
                             <div className="nav-login-drop">
                                 {user && (
-                                    <Link to={`/${user.tipo.toLowerCase()}/perfil/${user.id}`}>
+                                    <Link
+                                        to={`/${user.tipo.toLowerCase()}/perfil/${user.id}`}
+                                        onClick={() => setDropdownOpen(false)}
+                                    >
                                         <button type="button">Meu Perfil</button>
                                     </Link>
                                 )}
 
-                                <Link to={`/${user.tipo}/perfil/${user.id}/configuracoes`}>
+                                <Link
+                                    to={`/${user.tipo}/perfil/${user.id}/configuracoes`}
+                                    onClick={() => setDropdownOpen(false)}
+                                >
                                     <button type="button">Configurações</button>
                                 </Link>
+
                                 {user.tipo === "psicologo" && (
-                                    <Link to="/adicionar-artigos">
+                                    <Link
+                                        to="/adicionar-artigos"
+                                        onClick={() => setDropdownOpen(false)}
+                                    >
                                         <button type="button">Adicionar Artigos</button>
                                     </Link>
                                 )}
-                                <button type="button" onClick={handleLogout}>Sair</button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        handleLogout();
+                                        setDropdownOpen(false);
+                                    }}
+                                >
+                                    Sair
+                                </button>
                             </div>
                         </div>
+
                     </div>
                 )}
             </nav>
