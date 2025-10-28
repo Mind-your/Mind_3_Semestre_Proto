@@ -7,7 +7,7 @@ import Filtro from "./filtro";
 import FiltroLocal from "./filtro-local";
 import CardCol from "./card-col";
 import CardRow from "./card-row";
-import VerPsi from "../pop-ups/VerPsi";
+import VerPsi from "../pop-ups/Verpsi.jsx";
 import { HiChevronRight } from "react-icons/hi";
 import { FaSearch } from "react-icons/fa";
 

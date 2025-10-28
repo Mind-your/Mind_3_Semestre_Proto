@@ -1,10 +1,12 @@
-import { CgProfile  } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 import fotoPsi from '../../assets/img/perfil-default.png'
 import Calendario from '../perfil-page/calendario';
 import "../../assets/styles/pop-ups/verpsi.css";
+import { useNavigate } from "react-router-dom";
 
 
-export default function VerPsi({ open = false, close = () => {}, perfil }) {
+export default function VerPsi({ open = false, close = () => { }, perfil }) {
+  const navigate = useNavigate();
   // não renderiza se modal fechado ou sem perfil
   if (!open || !perfil) return null;
 
@@ -13,6 +15,12 @@ export default function VerPsi({ open = false, close = () => {}, perfil }) {
   const idade = perfil.idade || "--";
   const tags = Array.isArray(perfil.tags) ? perfil.tags : (perfil.tags ? [perfil.tags] : []);
   const foto = perfil.foto || fotoPsi;
+  const handleOpenProfile = () => {
+  console.log("➡️ Enviando perfil para a rota:", perfil);
+  navigate(`/perfil/psicologo/${perfil.id}`, { state: { perfil } });
+};
+
+
 
   return (
     <div className="container-ver-psi">
@@ -21,23 +29,27 @@ export default function VerPsi({ open = false, close = () => {}, perfil }) {
           <h2>{nome}</h2>
           <p><b>Idade:</b> {idade}</p>
           <p><b>Local:</b> {local}</p>
-          <button className="icon-btn icon-ui">
-            <CgProfile type="button" />
+          <button
+            className="icon-btn icon-ui"
+            onClick={handleOpenProfile}
+          >
+            <CgProfile />
           </button>
+
         </div>
         <div className="container-conhecimentos">
           <h2>Conhecimentos:</h2>
           {tags.length === 0 ? (
-              <p style={{ margin: 0 }}>Nenhuma especialidade informada</p>
-            ) : (
-              tags.map((t, i) => (
-                <span key={i} className="tag-chip" data-speciality={t}>{t}</span>
-              ))
-            )}
-        </div>       
-        <img src={foto} alt={nome}/>
+            <p style={{ margin: 0 }}>Nenhuma especialidade informada</p>
+          ) : (
+            tags.map((t, i) => (
+              <span key={i} className="tag-chip" data-speciality={t}>{t}</span>
+            ))
+          )}
+        </div>
+        <img src={foto} alt={nome} />
       </div>
-      <Calendario/>
+      <Calendario />
       <div className="container-agendar">
         <div className="container-legenda">
           <div className="tag-legenda">

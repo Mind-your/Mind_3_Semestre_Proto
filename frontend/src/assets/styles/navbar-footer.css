@@ -30,19 +30,12 @@ nav > ul, a{
 .nav-login-drop {
     display: flex;
     flex-direction: column;
-    position: absolute;
-
     padding: var(--spacing-xs);
-    width: 120px;
-    min-height: fit-content;
+    width: max-content;
     border-radius: var(--border-radius-md);
-    border: none;
-    outline: none;
     color: white;
     background-color: var(--green-default-100);
-    transform: translateY(5px);
     cursor: pointer;
-    z-index: 5;
 }
 
 .nav-right-buttons {
@@ -51,12 +44,11 @@ nav > ul, a{
 }
 
 .nav-login-drop-wrapper {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    transform: translateX(-12px);
-    display: none; 
-    z-index: 1000;
+    position: fixed; /* fixa no canto da tela */
+    top: 70px; /* ajusta conforme a altura do seu nav */
+    right: 20px; /* margem da borda direita */
+    z-index: 999;
+    display: none;
 }
 
 .nav-login-drop-wrapper.show {

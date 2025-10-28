@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Artigos from "./pages/Artigos";
 import Login from "./pages/Login";
 import Perfil from "./pages/Perfil";
+import PerfilPublicoPsicologo from "./components/perfil-page/sectionPublicoPsicologo";
 import SobreNos from "./pages/SobreNos";
 import AddArtigos from "./pages/AddArtigos";
 import Configuracoes from "./pages/Configuracoes";
@@ -25,60 +26,63 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />} errorElement={<ErrorPage />}>
-        {/* Rotas públicas */}
-         <Route index element={<LandingPage />} />
+          {/* Rotas públicas */}
+          <Route index element={<LandingPage />} />
           <Route path="home" element={<Home />} />
           <Route path="artigos" element={<Artigos />} />
           <Route path="sobre-nos" element={<SobreNos />} />
           <Route path="termos-e-condicoes" element={<TermosCondicoes />} />
-        
-        {/* Rotas de autenticação */}
-        <Route path='login' element={<Login />} />
-        <Route path='login=0' element={<Login />} />
-        <Route path='login=1' element={<Login />} />
-        <Route path='login=2' element={<Login />} />
-        <Route path='cadastro' element={<Cadastro />} />
-        
-        {/* Rotas protegidas - QUALQUER tipo de usuário */}
-        <Route 
-          path=':tipo/perfil/:id' 
-          element={
-            <ProtectedRoute>
-              <Perfil />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path=':tipo/perfil/:id/configuracoes' 
-          element={
-            <ProtectedRoute>
-              <Configuracoes />
-            </ProtectedRoute>
-          } 
-        />
-        <Route 
-          path=':tipo/perfil/:id/video-chamada' 
-          element={
-            <ProtectedRoute>
-              <VideoChamada />
-            </ProtectedRoute>
-          } 
-        />
-        
-        {/* Rota protegida APENAS para psicólogos */}
-        <Route 
-          path='adicionar-artigos' 
-          element={
-            <ProtectedRoute requirePsicologo={true}>
-              <AddArtigos />
-            </ProtectedRoute>
-          } 
-        />
+          <Route path="/perfil/psicologo/:id" element={<PerfilPublicoPsicologo />} />
 
-        
+
+
+          {/* Rotas de autenticação */}
+          <Route path='login' element={<Login />} />
+          <Route path='login=0' element={<Login />} />
+          <Route path='login=1' element={<Login />} />
+          <Route path='login=2' element={<Login />} />
+          <Route path='cadastro' element={<Cadastro />} />
+
+          {/* Rotas protegidas - QUALQUER tipo de usuário */}
+          <Route
+            path=':tipo/perfil/:id'
+            element={
+              <ProtectedRoute>
+                <Perfil />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path=':tipo/perfil/:id/configuracoes'
+            element={
+              <ProtectedRoute>
+                <Configuracoes />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path=':tipo/perfil/:id/video-chamada'
+            element={
+              <ProtectedRoute>
+                <VideoChamada />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Rota protegida APENAS para psicólogos */}
+          <Route
+            path='adicionar-artigos'
+            element={
+              <ProtectedRoute requirePsicologo={true}>
+                <AddArtigos />
+              </ProtectedRoute>
+            }
+          />
+
+
           {/* Rota nao encontrada */}
           <Route path="*" element={<ErrorPage />} />
-     </Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   );
