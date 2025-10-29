@@ -37,11 +37,12 @@ export default function App() {
 
 
           {/* Rotas de autenticação */}
-          <Route path='login' element={<Login />} />
           <Route path='login=0' element={<Login />} />
           <Route path='login=1' element={<Login />} />
           <Route path='login=2' element={<Login />} />
-          <Route path='cadastro' element={<Cadastro />} />
+          <Route path='cadastro=0' element={<Cadastro />} />
+          <Route path='cadastro=1' element={<Cadastro />} />
+          <Route path='cadastro=2' element={<Cadastro />} />
 
           {/* Rotas protegidas - QUALQUER tipo de usuário */}
           <Route

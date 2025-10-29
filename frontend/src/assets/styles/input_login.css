@@ -67,3 +67,31 @@ section.login-inputs img {
 
     }
 }
+/* -------------OPTIONS---------------- */
+.container-options{
+    display: flex;
+    gap: 10px;
+    border-radius: 15px;
+    padding: 4px;
+}
+.container-options button {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border: 1px solid var(--black-default-100);
+}
+
+.container-options button:hover {
+  background-color: var(--white-default-100);
+}
+
+/* Cor quando o botão estiver ativo */
+.container-options button.active {
+  background-color: var(--green-default-100); /* usa tua cor primária */
+  color: #fff;
+  transform: scale(1.05);
+}
