@@ -3,7 +3,20 @@
 
 section {
     display: flex;
-    align-items: center;
+}
+.container-icon-return-login{
+    width: 100%;
+    justify-content: start;
+    position: relative;
+}
+.icon-return-login{
+    position: absolute;
+    top: 10px;
+}
+
+.container-tittle{
+    width: 100%;
+    display: flex;
 }
 .background-cadastro{
     width: 50%;

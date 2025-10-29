@@ -1,8 +1,7 @@
 const API_URL = "http://localhost:8080";
 
-// Serviço de autenticação com JWT
 export const authService = {
-    // Login com JWT
+    // 🔹 Login com JWT
     async login(username, password) {
         const res = await fetch(`${API_URL}/api/auth/signin`, {
             method: "POST",
@@ -15,56 +14,43 @@ export const authService = {
         }
 
         const data = await res.json();
-        
+
         // Salvar token e username no localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
-        
+
         return data;
     },
 
-    // Buscar dados completos do usuário (paciente ou psicólogo)
+    // 🔹 Buscar dados completos (paciente, psicólogo ou voluntário)
     async getUserData(username) {
         const token = this.getToken();
-        
-        // Tentar buscar como paciente
-        try {
-            const resPaciente = await fetch(`${API_URL}/pacientes/login/${username}`, {
+
+        const fetchWithAuth = async (endpoint) => {
+            const res = await fetch(`${API_URL}/${endpoint}/login/${username}`, {
                 headers: {
                     "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
+                    "Content-Type": "application/json",
+                },
             });
+            if (res.ok) return res.json();
+            return null;
+        };
 
-            if (resPaciente.ok) {
-                const paciente = await resPaciente.json();
-                return { ...paciente, tipo: "paciente" };
-            }
-        } catch (err) {
-            console.log("Não é paciente, tentando psicólogo...");
-        }
+        // Tentar nas 3 entidades conhecidas
+        const paciente = await fetchWithAuth("pacientes");
+        if (paciente) return { ...paciente, tipo: "paciente" };
 
-        // Tentar buscar como psicólogo
-        try {
-            const resPsicologo = await fetch(`${API_URL}/psicologos/login/${username}`, {
-                headers: {
-                    "Authorization": `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                }
-            });
+        const psicologo = await fetchWithAuth("psicologos");
+        if (psicologo) return { ...psicologo, tipo: "psicologo" };
 
-            if (resPsicologo.ok) {
-                const psicologo = await resPsicologo.json();
-                return { ...psicologo, tipo: "psicologo" };
-            }
-        } catch (err) {
-            console.log("Não é psicólogo");
-        }
+        const voluntario = await fetchWithAuth("voluntarios");
+        if (voluntario) return { ...voluntario, tipo: "voluntario" };
 
         throw new Error("Usuário não encontrado");
     },
 
-    // Cadastrar paciente
+    // 🔹 Cadastrar paciente
     async registerPaciente(userData) {
         const res = await fetch(`${API_URL}/pacientes/cadastrar`, {
             method: "POST",
@@ -72,14 +58,12 @@ export const authService = {
             body: JSON.stringify(userData),
         });
 
-        if (!res.ok) {
-            throw new Error("Erro ao cadastrar paciente");
-        }
 
+        if (!res.ok) throw new Error("Erro ao cadastrar paciente");
         return res.json();
     },
 
-    // Cadastrar psicólogo
+    // 🔹 Cadastrar psicólogo
     async registerPsicologo(userData) {
         const res = await fetch(`${API_URL}/psicologos/cadastrar`, {
             method: "POST",
@@ -87,39 +71,47 @@ export const authService = {
             body: JSON.stringify(userData),
         });
 
-        if (!res.ok) {
-            throw new Error("Erro ao cadastrar psicólogo");
-        }
-
+        if (!res.ok) throw new Error("Erro ao cadastrar psicólogo");
         return res.json();
     },
 
-    // Logout
+    // 🔹 Cadastrar voluntário ✅ (novo)
+    async registerVoluntario(userData) {
+        const res = await fetch(`${API_URL}/voluntarios/cadastrar`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData),
+        });
+
+        if (!res.ok) throw new Error("Erro ao cadastrar voluntário");
+        return res.json();
+    },
+
+    // 🔹 Logout
     logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
         localStorage.removeItem("user");
     },
 
-    // Verificar se está autenticado
+    // 🔹 Verificar se está autenticado
     isAuthenticated() {
         return !!this.getToken();
     },
 
-    // Obter token
+    // 🔹 Obter token e username
     getToken() {
         return localStorage.getItem("token");
     },
 
-    // Obter username
     getUsername() {
         return localStorage.getItem("username");
     },
 
-    // Fazer requisição autenticada
+    // 🔹 Requisição autenticada
     async authenticatedFetch(url, options = {}) {
         const token = this.getToken();
-        
+
         if (!token) {
             throw new Error("Não autenticado");
         }
@@ -127,7 +119,7 @@ export const authService = {
         const headers = {
             ...options.headers,
             "Authorization": `Bearer ${token}`,
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         };
 
         const res = await fetch(url, { ...options, headers });
@@ -138,5 +130,5 @@ export const authService = {
         }
 
         return res;
-    }
+    },
 };

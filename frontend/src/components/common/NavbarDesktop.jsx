@@ -13,7 +13,7 @@ export default function NavDesktop() {
 
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate("/login=0");
     };
 
     // 🔽 Fecha o dropdown ao clicar fora
@@ -65,6 +65,9 @@ export default function NavDesktop() {
                     )}
                 </ul>
                 <div className="nav-right-buttons" ref={dropdownRef}>
+                    {!isAuthenticated ? (
+                        <>
+                        <Link to="login=0">
                     <button
                         type="button"
                         className="nav-btn-login"
@@ -72,22 +75,27 @@ export default function NavDesktop() {
                     >
                         {isAuthenticated ? user.nome : "Login"}
                     </button>
+                    </Link>
+                        </>
 
-                    <div className={`nav-login-drop-wrapper ${isDropdownOpen ? "show" : ""}`}>
+                    ):(
+                        <>
+                         <button
+                        type="button"
+                        className="nav-btn-login"
+                        onClick={() => setDropdownOpen(prev => !prev)}
+                    >
+                        {isAuthenticated ? user.nome : "Login"}
+                    </button>
+                        </>
+                    )}
+                        
+                    
+                    
+
+                    <div className={`nav-login-drop-wrapper ${isAuthenticated && isDropdownOpen ? "show" : ""}`}>
                         <div className="nav-login-drop">
-                            {!isAuthenticated ? (
-                                <>
-                                    <Link to="/login=0" onClick={() => setDropdownOpen(false)}>
-                                        <button type="button">Paciente</button>
-                                    </Link>
-                                    <Link to="/login=1" onClick={() => setDropdownOpen(false)}>
-                                        <button type="button">Psicólogo</button>
-                                    </Link>
-                                    <Link to="/login=2" onClick={() => setDropdownOpen(false)}>
-                                        <button type="button">Voluntário</button>
-                                    </Link>
-                                </>
-                            ) : (
+                            {isAuthenticated ? (
                                 <>
                                     {user && (
                                         <Link
@@ -120,6 +128,9 @@ export default function NavDesktop() {
                                     >
                                         Sair
                                     </button>
+                                </>
+                            ) : (
+                                <>
                                 </>
                             )}
                         </div>

@@ -8,7 +8,7 @@ export function AuthProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
-    // Verificar se há usuário logado ao carregar
+    // 🔹 Verifica se há usuário logado
     useEffect(() => {
         async function loadUser() {
             const token = authService.getToken();
@@ -29,20 +29,15 @@ export function AuthProvider({ children }) {
         loadUser();
     }, []);
 
-    // Login
+    // 🔹 Login
     async function login(username, password) {
         setLoading(true);
         setError("");
         try {
-            // Fazer login e obter token
             await authService.login(username, password);
-
-            // Buscar dados completos do usuário
             const userData = await authService.getUserData(username);
-
             setUser(userData);
             localStorage.setItem("user", JSON.stringify(userData));
-
             return { success: true, user: userData };
         } catch (err) {
             const errorMessage = err.message || "Erro ao fazer login";
@@ -53,19 +48,34 @@ export function AuthProvider({ children }) {
         }
     }
 
-    // Cadastro de paciente
-    async function registerPaciente(userData) {
+    // 🔹 Cadastro genérico (para paciente, psicólogo e voluntário)
+    async function registerUser(userData) {
         setLoading(true);
         setError("");
-        try {
-            const newUser = await authService.registerPaciente(userData);
 
-            // Fazer login automaticamente após cadastro
-            await login(userData.login, userData.senha);
+        try {
+            let newUser;
+
+            // Decide qual serviço chamar
+            const tipo = userData.tipo || userData.tipoUsuario;
+
+            if (tipo === "paciente") {
+                newUser = await authService.registerPaciente(userData);
+            } else if (tipo === "psicologo") {
+                newUser = await authService.registerPsicologo(userData);
+            } else if (tipo === "voluntario") {
+                newUser = await authService.registerVoluntario(userData);
+            } else {
+                throw new Error("Tipo de usuário inválido");
+            }
+
+
+            // Faz login automático após cadastro
+            await login(userData.email, userData.senha);
 
             return { success: true, user: newUser };
         } catch (err) {
-            const errorMessage = err.message || "Erro ao cadastrar paciente";
+            const errorMessage = err.message || "Erro ao cadastrar usuário";
             setError(errorMessage);
             return { success: false, error: errorMessage };
         } finally {
@@ -73,34 +83,14 @@ export function AuthProvider({ children }) {
         }
     }
 
-    // Cadastro de psicólogo
-    async function registerPsicologo(userData) {
-        setLoading(true);
-        setError("");
-        try {
-            const newUser = await authService.registerPsicologo(userData);
-
-            // Fazer login automaticamente após cadastro
-            await login(userData.login, userData.senha);
-
-            return { success: true, user: newUser };
-        } catch (err) {
-            const errorMessage = err.message || "Erro ao cadastrar psicólogo";
-            setError(errorMessage);
-            return { success: false, error: errorMessage };
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    // Logout
+    // 🔹 Logout
     function logout() {
         authService.logout();
         setUser(null);
         localStorage.removeItem("user");
     }
 
-    // Atualizar dados do usuário
+    // 🔹 Atualizar usuário no estado e localStorage
     function updateUser(newData) {
         const updatedUser = { ...user, ...newData };
         setUser(updatedUser);
@@ -112,13 +102,13 @@ export function AuthProvider({ children }) {
         loading,
         error,
         login,
-        registerPaciente,
-        registerPsicologo,
+        registerUser, // ✅ função genérica usada pelo InputCadastro
         logout,
         updateUser,
         isAuthenticated: !!user,
         isPaciente: user?.tipo === "paciente",
         isPsicologo: user?.tipo === "psicologo",
+        isVoluntario: user?.tipo === "voluntario",
     };
 
     return (
