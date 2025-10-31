@@ -1,8 +1,8 @@
-import { useRouteError, Link } from "react-router";
+import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 
-export default function ErrorPage() {
-    const error = useRouteError();
+export default function ErrorPage( {error}) {
+
     const { user } = useAuth();
 
     return (

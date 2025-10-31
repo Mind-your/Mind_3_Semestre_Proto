@@ -50,28 +50,28 @@ export default function InputCadastro() {
 
         // 🧩 Validação manual
         if (!form.nome || !form.dataNascimento || !form.email || !form.localidade) {
-            alert("Preencha todos os campos obrigatórios!");
+            /* alert("Preencha todos os campos obrigatórios!"); */
             return;
         }
 
         if (form.senha !== form.confirmarSenha) {
-            alert("As senhas não coincidem!");
+            /* alert("As senhas não coincidem!"); */
             return;
         }
 
         if (tipoUsuario === "paciente" && (!form.telefone || !form.genero)) {
-            alert("Preencha telefone e gênero!");
-            return;
+/*             alert("Preencha telefone e gênero!");
+ */            return;
         }
 
         if (tipoUsuario === "psicologo" && (!form.crp || !form.especialidade)) {
-            alert("Preencha CRP e especialidade!");
-            return;
+/*             alert("Preencha CRP e especialidade!");
+ */            return;
         }
 
         if (tipoUsuario === "voluntario" && (!form.ra || !form.token)) {
-            alert("Preencha RA e token!");
-            return;
+/*             alert("Preencha RA e token!");
+ */            return;
         }
 
         const userData = {
@@ -96,10 +96,10 @@ export default function InputCadastro() {
         const result = await registerUser(userData);
 
         if (result?.success) {
-            alert("Cadastro realizado com sucesso!");
+            /* alert("Cadastro realizado com sucesso!"); */
             navigate("/login=0");
         } else {
-            alert(result?.error || "Erro ao cadastrar. Tente novamente.");
+            /* alert(result?.error || "Erro ao cadastrar. Tente novamente."); */
         }
 
 
