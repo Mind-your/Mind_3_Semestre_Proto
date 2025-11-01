@@ -121,6 +121,7 @@
 .button-open-pop-up:hover{
     background-color: var(--silver-chalice-100);
 }
+
 /* Botão de ("ver") dos card psi*/
 .button-ver-card-psi {
     cursor: pointer;

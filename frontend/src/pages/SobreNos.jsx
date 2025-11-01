@@ -1,7 +1,7 @@
 import "../assets/styles/sobre-nos/sobre-nos.css"
 import videoCall from "../assets/img/ilustracao_sobrenos.svg";
 import therapySection from "../assets/img/imagem_sobrenos.jpg";
-import {Link} from "react-router"
+import {Link} from "react-router-dom"
 
 
 export default function SobreNos() {

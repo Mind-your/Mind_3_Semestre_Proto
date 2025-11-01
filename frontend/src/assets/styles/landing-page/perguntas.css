@@ -1,10 +1,11 @@
 section.container-questions{
     margin-bottom:80px;
+    display:flex;
+    flex-direction: column;
 }
 section.container-questions > div{
-    gap:20px;
-    max-width:60%;
     margin: auto;
+    margin: 0 20% 0 20%;
 }
 section.container-questions .answer{
     display:none;
@@ -58,6 +59,6 @@ button.accordion:hover{
 
 @media(max-width:638px){
     section.container-questions > div{
-        max-width:90%;
+        margin:0 5% 0 5%;
     }
 }

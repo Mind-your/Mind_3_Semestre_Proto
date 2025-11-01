@@ -1,39 +1,30 @@
 @import url("./main.css");
 @import url("../styles/ui/buttons.css");
+@import url("./input_login.css");
 
-section {
-    display: flex;
-}
 .container-icon-return-login{
     width: 100%;
     justify-content: start;
     position: relative;
 }
 .icon-return-login{
-    position: absolute;
-    top: 10px;
+    background: transparent;
+    font-size: 2.5rem;
+    margin-left:10px;
+    cursor: pointer;
+    border:none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: var(--spacing-xs);
+}
+.icon-return-login:hover{
+    background-color: var(--alabaster-100);
 }
 
-.container-tittle{
-    width: 100%;
-    display: flex;
-}
-.background-cadastro{
-    width: 50%;
-}
-.inputs{
-    display: flex;
-    flex-direction: column;
-}
-.duo-input{
-    display: flex;
-    gap: var(--spacing-lg);
-}
-.input{
-    display: flex;
-    flex-direction: column;
-    width: 50%;
-}
+/* Area abaixo do forms (botão e termos) */
+
 .container-cadastrar-entrar{
     display: flex;
     gap: var(--spacing-lg);
@@ -50,13 +41,56 @@ section {
     height: 25px;
     width: 25px;
 }
-@media (max-width: 799px) {
-    .section-cadastro{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .section-cadastro img{
-        display: none;
-    }
+
+
+/* Forms - Inputs ---------------- */
+form.inputs .cadastro-input {
+  display: grid;
+  gap: var(--spacing-xs);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
+}
+
+/* Campos individuais */
+.cadastro-input .input {
+  display: flex;
+  flex-direction: column;
+}
+
+.cadastro-input .login-titulo label {
+  font-weight: 600;
+  color: var(--black-default-100);
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+/* Inputs */
+.cadastro-input input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--gray-100);
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 15px;
+}
+
+/* Responsividade ---------- */
+
+@media (min-width: 800px) {
+  form.inputs .cadastro-input {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      "nome nome"
+      "dataNascimento email"
+      "localidade telefone"
+      "genero genero"
+      "crp especialidade"
+      "ra token"
+      "senha confirmarSenha";
+  }
+
+  .cadastro-input .input:nth-child(1) { grid-area: nome; }
+  .cadastro-input .input:nth-child(2) { grid-area: dataNascimento; }
+  .cadastro-input .input:nth-child(3) { grid-area: email; }
+  .cadastro-input .input:nth-child(4) { grid-area: localidade; }
 }

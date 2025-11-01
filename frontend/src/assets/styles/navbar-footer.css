@@ -69,6 +69,7 @@ nav > ul, a{
 .nav-login-drop button:hover{
     background-color: var(--green-light-default-100);
     border-radius: var(--border-radius-sm);
+    color: var(--dark-100)
 }
 
 /* Navbar Mobile ------------------- */

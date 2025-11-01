@@ -3,7 +3,7 @@ import logotipo from "../../assets/img/logotipo.svg"
 
 import NavDesktop from './NavbarDesktop'
 import NavMobile from './NavbarMobile'
-import { NavLink } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 export default function Navbar() {

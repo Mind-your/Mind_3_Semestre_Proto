@@ -1,5 +1,4 @@
 import { HiOutlineX } from "react-icons/hi";
-import { } from 'react';
 import "../../assets/styles/pop-ups/deletar.css";
 
 export default function Deletar({ open = false, close = () => {} }) {

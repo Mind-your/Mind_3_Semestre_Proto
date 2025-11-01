@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router'
+import { NavLink } from 'react-router-dom'
 import { useState } from 'react'
 import { 
   HiOutlineHome, 
@@ -19,7 +19,7 @@ export default function NavMobile() {
     { icon: <HiOutlineHome />, to: "/" },
     { 
       icon: <HiOutlineUser />, 
-      to: isAuthenticated ? `/${user.tipo}/perfil/${user.id}` : "/login" 
+      to: isAuthenticated ? `/${user.tipo}/perfil/${user.id}` : `/login=0` 
     },
     { icon: <HiOutlineQuestionMarkCircle />, to: "/sobre-nos" },
   ];
