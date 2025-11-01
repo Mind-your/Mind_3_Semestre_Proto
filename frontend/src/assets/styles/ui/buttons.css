@@ -23,12 +23,16 @@
 .button-confirm{
     background-color: var(--green-default-100);
     color: var(--white-default-100);
-    padding:10px 25px;
-    font-weight: 500;
-    font-size: 1.1rem;
+    padding:10px 20px;
+    font-weight: 400;
+    font-size: 1rem;
     border: none;
     border-radius: var(--border-radius-md);
     cursor: pointer;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm)
 }
 
 .button-confirm:hover{
@@ -128,8 +132,8 @@
     color: var(--white-default-100);
     background-color: var(--red-default-100);
     padding:10px 20px;
-    font-weight: 600;
-    font-size: 1.1rem;
+    font-weight: 500;
+    font-size: 1rem;
     border: none;
     border-radius: var(--border-radius-md);
 }
@@ -138,29 +142,8 @@
 }
 
 /* Botão de ("filtragem") da home*/
-.button-buscar {
-    position: relative;
-    font-size: 1.1rem;
-    font-weight: 500;
-    padding:10px 25px;
-    border-radius: 0.4em;
-    border: none;
-    color: var(--white-default-100);
-    background-color: var(--green-default-100);
-    transition: background-color 0.1s;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    width: 195px;
-}
 
-.button-buscar:hover {
-    background-color: var(--sea-green-100);
-    transition: background-color 0.25s;
-}
-.checkbox {
+/* .checkbox {
     position: relative;
     background: var(--green-default-100);
     flex-direction: column;
@@ -247,23 +230,7 @@
     background: transparent;
     white-space: nowrap;
     width: 100%;
-}
-
-/* Botão de ("pesquisar") da home*/
-.button-search {
-    background-color: var(--green-default-100);
-    color: var(--white-default-100);
-    width: auto;
-    height: 44px;
-    padding: 10px;
-    font-size: max-content;
-    border: none;
-    border-radius: 0px 10px 10px 0px;
-    cursor: pointer;
-}
-.button-search:hover {
-    background-color: var(--green-light-default-100);
-}
+} */
 
 /* Botão de ("mais") da home*/
 .button-mais {

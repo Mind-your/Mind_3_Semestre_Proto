@@ -1,4 +1,4 @@
-import { usePsicologoss } from "../../context/psicologos";
+import { usePsicologos } from "../../context/psicologos";
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { HiOutlineMail } from "react-icons/hi";
@@ -9,7 +9,7 @@ import VerPsi from "../pop-ups/Verpsi"; // 🔹 Importa o pop-up
 export default function InfoPublicoPsicologo() {
     const { id } = useParams();
     const location = useLocation();
-    const { psicologos } = usePsicologoss();
+    const { psicologos } = usePsicologos();
 
     const [perfil, setPerfil] = useState(null);
     const [openPsi, setOpenPsi] = useState(false);
