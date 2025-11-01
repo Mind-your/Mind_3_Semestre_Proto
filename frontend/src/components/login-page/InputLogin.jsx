@@ -69,6 +69,7 @@ export default function InputLogin() {
             toast.success("Logado", {
                 position: "top-center",
                 theme: "light",
+                autoClose: 2000,
                 draggable: true,
                 ariaLabel: "Logado"
             })

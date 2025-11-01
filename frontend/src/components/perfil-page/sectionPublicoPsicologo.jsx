@@ -1,6 +1,6 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { usePsicologoss } from "../../context/psicologos";
+import { usePsicologos } from "../../context/psicologos";
 import InfoPublicoPsicologo from "./infoPublicoPsicologo.jsx";
 import Calendario from "./calendario.jsx";
 import SobrePsicologo from "./sobrePsicologo.jsx";
@@ -9,7 +9,7 @@ import VerPsi from "../pop-ups/Verpsi.jsx";
 export default function PerfilPublicoPsicologo() {
   const { id } = useParams();
   const location = useLocation();
-  const { psicologos } = usePsicologoss();
+  const { psicologos } = usePsicologos();
   const [perfil, setPerfil] = useState(null);
   const [openPsi, setOpenPsi] = useState(false);
 

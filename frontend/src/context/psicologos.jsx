@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from 'react';
 
 // Contexto temporário com dados de psicólogos para desenvolvimento
-const PsicologossContext = createContext(null);
+const PsicologosContext = createContext(null);
 
 const consultasPadrao = {
   "2025-10-21": ["12:13", "14:30"],
@@ -58,7 +58,7 @@ const psicologosInit = [
   }
 ];
 
-export function PsicologossProvider({ children }) {
+export function PsicologosProvider({ children }) {
   const [psicologos] = useState(psicologosInit);
 
   function getById(id) {
@@ -70,14 +70,14 @@ export function PsicologossProvider({ children }) {
   }
 
   return (
-    <PsicologossContext.Provider value={{ psicologos, getById, getByName }}>
+    <PsicologosContext.Provider value={{ psicologos, getById, getByName }}>
       {children}
-    </PsicologossContext.Provider>
+    </PsicologosContext.Provider>
   );
 }
 
-export function usePsicologoss() {
-  const ctx = useContext(PsicologossContext);
-  if (!ctx) throw new Error('usePsicologoss must be used within PsicologossProvider');
+export function usePsicologos() {
+  const ctx = useContext(PsicologosContext);
+  if (!ctx) throw new Error('usePsicologos must be used within PsicologosProvider');
   return ctx;
 }

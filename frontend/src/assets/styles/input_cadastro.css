@@ -37,6 +37,7 @@
     gap: 5px;
 }
 .checkbox{
+    display:block;
     padding: var(--spacing-lg);
     height: 25px;
     width: 25px;
