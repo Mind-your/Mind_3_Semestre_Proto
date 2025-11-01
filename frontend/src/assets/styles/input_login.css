@@ -11,7 +11,7 @@ section.login-inputs img {
 }
 
 .container-input-login {
-    width: 50%;
+    width: 100%;
     padding: var(--spacing-lg);
     display: flex;
     flex-direction: column;
@@ -94,4 +94,13 @@ section.login-inputs img {
   background-color: var(--green-default-100); /* usa tua cor primária */
   color: #fff;
   transform: scale(1.05);
+}
+@media (max-width: 799px) {
+    .login-inputs{
+        display: flex;
+        flex-direction: column;
+    }
+    .login-inputs img{
+        display: none;
+    }
 }

@@ -30,6 +30,7 @@ public class Paciente {
     private String sobreMim;
     private String medicamentos;
     private String preferencias;
+    private String especialidade;
 
     // Getters e Setters
 
@@ -151,4 +152,8 @@ public class Paciente {
     public void setPreferencias(String preferencias) {
         this.preferencias = preferencias;
     }
+
+    public String getEspecialidade() { return  especialidade; }
+
+    public void setEspecialidade(String especialidade) { this.especialidade = especialidade; }
 }

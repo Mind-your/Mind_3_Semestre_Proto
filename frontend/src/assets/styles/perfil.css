@@ -103,8 +103,7 @@
 }
 
 .button-config:hover {
-  background: var(--green-light-default-100);
-  color: var(--black-default-100);
+  background: var(--sea-green-100);
 }
 
 .button-config a {
@@ -143,7 +142,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 260px;
+  height:auto;
   /* altura suficiente para 3 horários + botão */
   justify-content: flex-start;
   position: relative;
@@ -644,4 +643,9 @@
     gap: 40px;
   }
 
+}
+@media (min-width: 800px) and (max-width: 1046px){
+  .horario{
+    padding: 5px;
+  }
 }

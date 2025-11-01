@@ -36,6 +36,10 @@ public class PacienteController {
     // Cadastrar
     @PostMapping("/cadastrar")
     public ResponseEntity<Paciente> cadastrar(@RequestBody Paciente paciente) {
+        // Se o login não for fornecido, usa o email como login
+        if (paciente.getLogin() == null || paciente.getLogin().isEmpty()) {
+            paciente.setLogin(paciente.getEmail());
+        }
         // Criptografar a senha antes de salvar
         paciente.setSenha(passwordEncoder.encode(paciente.getSenha()));
         Paciente novo = pacienteRepository.save(paciente);

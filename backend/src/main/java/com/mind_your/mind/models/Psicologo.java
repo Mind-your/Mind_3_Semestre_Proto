@@ -10,9 +10,9 @@ import java.time.Period;
 @Document(collection = "psicologos")
 public class Psicologo {
 
+
     @Id
     private String id; // Mongo usa String para ObjectId
-
     private String login;
     private String email;
     private String senha;
@@ -22,7 +22,6 @@ public class Psicologo {
 
     @Transient
     private Integer idade;
-
     private String genero = "";
     private String telefone = "";
     private String endereco = "";
@@ -31,6 +30,7 @@ public class Psicologo {
     private String medicamentos;
     private String preferencias;
     private String crp;
+    private String Especialidade;
 
     // Getters e Setters
 
@@ -160,5 +160,9 @@ public class Psicologo {
     public void setCrp(String crp) {
         this.crp = crp;
     }
+
+    public String getEspecialidade() { return  Especialidade; }
+
+    public void setEspecialidade(String Especialidade) {this.Especialidade = Especialidade; }
 }
 
