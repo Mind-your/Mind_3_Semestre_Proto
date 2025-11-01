@@ -1,9 +1,9 @@
 import { authService } from './authService';
 
-const API_URL = "http://localhost:8080/pacientes";
+const API_URL = "http://localhost:8080/psicologos";
 
 // Login
-export async function loginUser(login, senha) {
+export async function loginPsicologo(login, senha) {
     const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -18,7 +18,7 @@ export async function loginUser(login, senha) {
 }
 
 // Cadastrar
-export async function registerUser(userData) {
+export async function registerPsicologo(userData) {
     const res = await fetch(`${API_URL}/cadastrar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -32,12 +32,12 @@ export async function registerUser(userData) {
     return res.json();
 }
 
-// Listar todos os pacientes (com autenticação)
+// Listar todos os psicólogos (com autenticação)
 export async function listarTodos() {
     const res = await authService.authenticatedFetch(`${API_URL}`);
 
     if (!res.ok) {
-        throw new Error("Erro ao listar usuários");
+        throw new Error("Erro ao listar psicólogos");
     }
 
     return res.json();
@@ -48,7 +48,7 @@ export async function buscarPorEmail(email) {
     const res = await authService.authenticatedFetch(`${API_URL}/email/${email}`);
 
     if (!res.ok) {
-        throw new Error("Usuário não encontrado");
+        throw new Error("Psicólogo não encontrado");
     }
 
     return res.json();
@@ -59,7 +59,7 @@ export async function buscarPorNome(nome) {
     const res = await authService.authenticatedFetch(`${API_URL}/nome/${nome}`);
 
     if (!res.ok) {
-        throw new Error("Usuário não encontrado");
+        throw new Error("Psicólogo não encontrado");
     }
 
     return res.json();
@@ -70,7 +70,7 @@ export async function buscarPorLogin(login) {
     const res = await authService.authenticatedFetch(`${API_URL}/login/${login}`);
 
     if (!res.ok) {
-        throw new Error("Usuário não encontrado");
+        throw new Error("Psicólogo não encontrado");
     }
 
     return res.json();
@@ -81,13 +81,13 @@ export async function buscarPorId(id) {
     const res = await authService.authenticatedFetch(`${API_URL}/${id}`);
 
     if (!res.ok) {
-        throw new Error("Usuário não encontrado");
+        throw new Error("Psicólogo não encontrado");
     }
 
     return res.json();
 }
 
-// Atualizar usuário (com autenticação) ✅
+// Atualizar psicólogo (com autenticação) ✅
 export async function atualizar(id, camposAtualizados) {
     const res = await authService.authenticatedFetch(`${API_URL}/${id}`, {
         method: "PUT",
@@ -95,23 +95,23 @@ export async function atualizar(id, camposAtualizados) {
     });
 
     if (!res.ok) {
-        throw new Error("Erro ao atualizar usuário");
+        throw new Error("Erro ao atualizar psicólogo");
     }
 
     return res.json();
 }
 
-// Deletar usuário (com autenticação) ✅
+// Deletar psicólogo (com autenticação) ✅
 export async function deletar(id) {
     const res = await authService.authenticatedFetch(`${API_URL}/${id}`, {
         method: "DELETE",
     });
 
     if (!res.ok) {
-        throw new Error("Erro ao deletar usuário");
+        throw new Error("Erro ao deletar psicólogo");
     }
 
-    return res.status === 204 ? { mensagem: "Usuário deletado com sucesso" } : res.json();
+    return res.status === 204 ? { mensagem: "Psicólogo deletado com sucesso" } : res.json();
 }
 
 // Upload de imagem (com autenticação)
@@ -120,14 +120,13 @@ export async function uploadImagem(id, file) {
     formData.append('imagem', file);
 
     const token = authService.getToken();
-    
+
     const res = await fetch(`${API_URL}/${id}/imagem`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
         },
         body: formData
-        // Não adicionar Content-Type, o browser define automaticamente com boundary
     });
 
     if (!res.ok) {

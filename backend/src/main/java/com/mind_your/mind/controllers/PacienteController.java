@@ -82,26 +82,27 @@ public class PacienteController {
     }
 
     // Atualizar
-    @PutMapping("/{id}")
-    public ResponseEntity<Paciente> atualizar(@PathVariable String id, @RequestBody Paciente camposAtualizados) {
-        return pacienteRepository.findById(id)
-                .map(p -> {
-                    if (camposAtualizados.getNome() != null) p.setNome(camposAtualizados.getNome());
-                    if (camposAtualizados.getSobrenome() != null) p.setSobrenome(camposAtualizados.getSobrenome());
-                    if (camposAtualizados.getEmail() != null) p.setEmail(camposAtualizados.getEmail());
-                    if (camposAtualizados.getSenha() != null) p.setSenha(passwordEncoder.encode(camposAtualizados.getSenha()));
-                    if (camposAtualizados.getDtNascimento() != null) p.setDtNascimento(camposAtualizados.getDtNascimento());
-                    if (camposAtualizados.getGenero() != null) p.setGenero(camposAtualizados.getGenero());
-                    if (camposAtualizados.getTelefone() != null) p.setTelefone(camposAtualizados.getTelefone());
-                    if (camposAtualizados.getEndereco() != null) p.setEndereco(camposAtualizados.getEndereco());
-                    if (camposAtualizados.getImgPerfil() != null) p.setImgPerfil(camposAtualizados.getImgPerfil());
-                    if (camposAtualizados.getSobreMim() != null) p.setSobreMim(camposAtualizados.getSobreMim());
-                    if (camposAtualizados.getMedicamentos() != null) p.setMedicamentos(camposAtualizados.getMedicamentos());
-                    if (camposAtualizados.getPreferencias() != null) p.setPreferencias(camposAtualizados.getPreferencias());
+@PutMapping("/{id}")
+public ResponseEntity<Paciente> atualizar(@PathVariable String id, @RequestBody Paciente camposAtualizados) {
+    return pacienteRepository.findById(id)
+            .map(p -> {
+                if (camposAtualizados.getNome() != null) p.setNome(camposAtualizados.getNome());
+                if (camposAtualizados.getSobrenome() != null) p.setSobrenome(camposAtualizados.getSobrenome());
+                if (camposAtualizados.getLogin() != null) p.setLogin(camposAtualizados.getLogin()); // ✅ ADICIONAR ESTA LINHA
+                if (camposAtualizados.getEmail() != null) p.setEmail(camposAtualizados.getEmail());
+                if (camposAtualizados.getSenha() != null) p.setSenha(passwordEncoder.encode(camposAtualizados.getSenha()));
+                if (camposAtualizados.getDtNascimento() != null) p.setDtNascimento(camposAtualizados.getDtNascimento());
+                if (camposAtualizados.getGenero() != null) p.setGenero(camposAtualizados.getGenero());
+                if (camposAtualizados.getTelefone() != null) p.setTelefone(camposAtualizados.getTelefone());
+                if (camposAtualizados.getEndereco() != null) p.setEndereco(camposAtualizados.getEndereco());
+                if (camposAtualizados.getImgPerfil() != null) p.setImgPerfil(camposAtualizados.getImgPerfil());
+                if (camposAtualizados.getSobreMim() != null) p.setSobreMim(camposAtualizados.getSobreMim());
+                if (camposAtualizados.getMedicamentos() != null) p.setMedicamentos(camposAtualizados.getMedicamentos());
+                if (camposAtualizados.getPreferencias() != null) p.setPreferencias(camposAtualizados.getPreferencias());
 
-                    Paciente atualizado = pacienteRepository.save(p);
-                    return ResponseEntity.ok(atualizado);
-                }).orElse(ResponseEntity.notFound().build());
+                Paciente atualizado = pacienteRepository.save(p);
+                return ResponseEntity.ok(atualizado);
+            }).orElse(ResponseEntity.notFound().build());
     }
 
     // Buscar por ID

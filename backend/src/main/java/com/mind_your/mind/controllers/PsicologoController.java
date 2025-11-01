@@ -83,6 +83,7 @@ public class PsicologoController {
                 .map(p -> {
                     if (camposAtualizados.getNome() != null) p.setNome(camposAtualizados.getNome());
                     if (camposAtualizados.getSobrenome() != null) p.setSobrenome(camposAtualizados.getSobrenome());
+                    if (camposAtualizados.getLogin() != null) p.setLogin(camposAtualizados.getLogin()); // ✅ ADICIONAR ESTA LINHA
                     if (camposAtualizados.getEmail() != null) p.setEmail(camposAtualizados.getEmail());
                     if (camposAtualizados.getSenha() != null) p.setSenha(passwordEncoder.encode(camposAtualizados.getSenha()));
                     if (camposAtualizados.getDtNascimento() != null) p.setDtNascimento(camposAtualizados.getDtNascimento());
@@ -99,7 +100,7 @@ public class PsicologoController {
                     return ResponseEntity.ok(atualizado);
                 }).orElse(ResponseEntity.notFound().build());
     }
-
+    
     // Buscar por ID
     @GetMapping("/{id}")
     public ResponseEntity<Psicologo> buscarPorId(@PathVariable String id) {
