@@ -4,8 +4,8 @@ import background from "../../assets/img/background_input.png";
 import "../../assets/styles/input_cadastro.css";
 import OptionsCadastro from "./optionsCadastro";
 import { useAuth } from "../../context/authContext";
-import { RiArrowGoBackLine } from "react-icons/ri";
-
+import { HiChevronLeft } from "react-icons/hi";
+import { toast } from 'react-toastify';
 
 export default function InputCadastro() {
     const location = useLocation();
@@ -48,31 +48,12 @@ export default function InputCadastro() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // 🧩 Validação manual
-        if (!form.nome || !form.dataNascimento || !form.email || !form.localidade) {
-            /* alert("Preencha todos os campos obrigatórios!"); */
-            return;
-        }
-
-        if (form.senha !== form.confirmarSenha) {
-            /* alert("As senhas não coincidem!"); */
-            return;
-        }
-
-        if (tipoUsuario === "paciente" && (!form.telefone || !form.genero)) {
-/*             alert("Preencha telefone e gênero!");
- */            return;
-        }
-
-        if (tipoUsuario === "psicologo" && (!form.crp || !form.especialidade)) {
-/*             alert("Preencha CRP e especialidade!");
- */            return;
-        }
-
-        if (tipoUsuario === "voluntario" && (!form.ra || !form.token)) {
-/*             alert("Preencha RA e token!");
- */            return;
-        }
+        // Validação manual
+        if (!form.nome || !form.dataNascimento || !form.email || !form.localidade) {return; }
+        if (form.senha !== form.confirmarSenha) { return;}
+        if (tipoUsuario === "paciente" && (!form.telefone || !form.genero)) {return;}
+        if (tipoUsuario === "psicologo" && (!form.crp || !form.especialidade)) { return;}
+        if (tipoUsuario === "voluntario" && (!form.ra || !form.token)) { return; }
 
         const userData = {
             nome: form.nome,
@@ -82,7 +63,7 @@ export default function InputCadastro() {
             genero: form.genero,
             telefone: form.telefone,
             endereco: form.localidade,
-            tipoUsuario: tipoUsuario, // 👈 adicionamos o tipo
+            tipoUsuario: tipoUsuario,
         };
 
         if (tipoUsuario === "psicologo") {
@@ -96,28 +77,30 @@ export default function InputCadastro() {
         const result = await registerUser(userData);
 
         if (result?.success) {
-            /* alert("Cadastro realizado com sucesso!"); */
+            toast.success("Cadastro realizado", {
+                position: "top-center",
+                theme: "light",
+                draggable: true,
+                ariaLabel: "Logado"
+            })
             navigate("/login=0");
-        } else {
-            /* alert(result?.error || "Erro ao cadastrar. Tente novamente."); */
-        }
-
-
+        } 
     };
 
-
     return (
-        <section className="section-cadastro">
-            <img
-                className="background-cadastro"
-                src={background}
-                alt="Imagem de fundo da tela de cadastro"
-            />
+        <section className="login-inputs">
+            <div className="background-img-login-cadastro">
+                <img
+                    className="background"
+                    src={background}
+                    alt="Imagem de fundo da tela de cadastro"
+                />
+            </div>
             <div className="container-input-login">
                 <div className="container-icon-return-login">
                     <Link to="/login=0">
-                        <button className="icon-btn icon-ui icon-return-login">
-                            <RiArrowGoBackLine />
+                        <button className="icon-btn icon-return-login">
+                            <HiChevronLeft />
                         </button>
                     </Link>
                 </div>
@@ -125,9 +108,9 @@ export default function InputCadastro() {
                 <h1>Cadastro</h1>
                 <OptionsCadastro />
 
-                {/* ✅ Desativa a validação automática do navegador */}
+                {/* Desativa a validação automática do navegador */}
                 <form className="inputs" onSubmit={handleSubmit} noValidate>
-                    <div className="duo-input">
+                    <div className="cadastro-input">
                         <div className="input">
                             <span className="login-titulo"><label>Nome</label></span>
                             <input
@@ -147,9 +130,6 @@ export default function InputCadastro() {
                                 onChange={handleChange}
                             />
                         </div>
-                    </div>
-
-                    <div className="duo-input">
                         <div className="input">
                             <span className="login-titulo"><label>E-mail</label></span>
                             <input
@@ -170,85 +150,82 @@ export default function InputCadastro() {
                                 placeholder="Cidade / Estado"
                             />
                         </div>
-                    </div>
 
-                    {/* ✅ Campos específicos */}
-                    {tipoUsuario === "paciente" && (
-                        <div className="duo-input">
-                            <div className="input">
-                                <span className="login-titulo"><label>Telefone</label></span>
-                                <input
-                                    name="telefone"
-                                    type="text"
-                                    value={form.telefone}
-                                    onChange={handleChange}
-                                    placeholder="11 94002-8922"
-                                />
-                            </div>
-                            <div className="input">
-                                <span className="login-titulo"><label>Gênero</label></span>
-                                <input
-                                    name="genero"
-                                    type="text"
-                                    value={form.genero}
-                                    onChange={handleChange}
-                                    placeholder="Masculino / Feminino"
-                                />
-                            </div>
-                        </div>
-                    )}
+                        {/* Campos específicos */}
+                        {tipoUsuario === "paciente" && (
+                            <>
+                                <div className="input">
+                                    <span className="login-titulo"><label>Telefone</label></span>
+                                    <input
+                                        name="telefone"
+                                        type="text"
+                                        value={form.telefone}
+                                        onChange={handleChange}
+                                        placeholder="11 94002-8922"
+                                    />
+                                </div>
+                                <div className="input">
+                                    <span className="login-titulo"><label>Gênero</label></span>
+                                    <input
+                                        name="genero"
+                                        type="text"
+                                        value={form.genero}
+                                        onChange={handleChange}
+                                        placeholder="Masculino / Feminino"
+                                    />
+                                </div>
+                            </>
+                        )}
 
-                    {tipoUsuario === "psicologo" && (
-                        <div className="duo-input">
-                            <div className="input">
-                                <span className="login-titulo"><label>CRP</label></span>
-                                <input
-                                    name="crp"
-                                    type="text"
-                                    value={form.crp}
-                                    onChange={handleChange}
-                                    placeholder="06/12345"
-                                />
-                            </div>
-                            <div className="input">
-                                <span className="login-titulo"><label>Especialidade</label></span>
-                                <input
-                                    name="especialidade"
-                                    type="text"
-                                    value={form.especialidade}
-                                    onChange={handleChange}
-                                    placeholder="Terapia Cognitivo-Comportamental"
-                                />
-                            </div>
-                        </div>
-                    )}
+                        {tipoUsuario === "psicologo" && (
+                            <>
+                                <div className="input">
+                                    <span className="login-titulo"><label>CRP</label></span>
+                                    <input
+                                        name="crp"
+                                        type="text"
+                                        value={form.crp}
+                                        onChange={handleChange}
+                                        placeholder="06/12345"
+                                    />
+                                </div>
+                                <div className="input">
+                                    <span className="login-titulo"><label>Especialidade</label></span>
+                                    <input
+                                        name="especialidade"
+                                        type="text"
+                                        value={form.especialidade}
+                                        onChange={handleChange}
+                                        placeholder="Terapia Cognitivo-Comportamental"
+                                    />
+                                </div>
+                            </>
+                        )}
 
-                    {tipoUsuario === "voluntario" && (
-                        <div className="duo-input">
-                            <div className="input">
-                                <span className="login-titulo"><label>R.A</label></span>
-                                <input
-                                    name="ra"
-                                    type="text"
-                                    value={form.ra}
-                                    onChange={handleChange}
-                                    placeholder="123456"
-                                />
-                            </div>
-                            <div className="input">
-                                <span className="login-titulo"><label>Token</label></span>
-                                <input
-                                    name="token"
-                                    type="text"
-                                    value={form.token}
-                                    onChange={handleChange}
-                                    placeholder="Token de autorização"
-                                />
-                            </div>
-                        </div>
-                    )}
-
-                    <div className="duo-input">
+                        {tipoUsuario === "voluntario" && (
+                            <>
+                                <div className="input">
+                                    <span className="login-titulo"><label>R.A</label></span>
+                                    <input
+                                        name="ra"
+                                        type="text"
+                                        value={form.ra}
+                                        onChange={handleChange}
+                                        placeholder="123456"
+                                    />
+                                </div>
+                                <div className="input">
+                                    <span className="login-titulo"><label>Token</label></span>
+                                    <input
+                                        name="token"
+                                        type="text"
+                                        value={form.token}
+                                        onChange={handleChange}
+                                        placeholder="Token de autorização"
+                                    />
+                                </div>
+                            </>
+                        )}
                         <div className="input">
                             <span className="login-titulo"><label>Senha</label></span>
                             <input
@@ -268,13 +245,12 @@ export default function InputCadastro() {
                             />
                         </div>
                     </div>
-
                     <div className="container-cadastrar-entrar">
                         <div className="container-termos">
                             <input id="Checkbox" type="checkbox" className="checkbox" required />
                             <label htmlFor="Checkbox">
                                 Li e aceito os{" "}
-                                <Link to="/termosCondicoes" className="link-cadastro">
+                                <Link to="/termos-e-condicoes" className="link-cadastro">
                                     Termos e Condições
                                 </Link>
                             </label>

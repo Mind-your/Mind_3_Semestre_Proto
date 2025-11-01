@@ -23,6 +23,7 @@ npm run dev:frontend
 - Vite
 - React-router
 - React-icons (HeroIcons -> https://react-icons.github.io/react-icons/icons/hi/)
+- React-hot-toast
 
 ## Pastas
 

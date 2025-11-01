@@ -5,10 +5,11 @@ import AtualizacaoCredenciais from "../components/configuracoes/AtualizacaoCrede
 import InfosPerfil from "../components/configuracoes/InfosPerfil"
 import Deletar from "../components/pop-ups/Deletar"
 import PhotoDefault from "../assets/img/perfil-default.png"
-import Horarios from "../components/configuracoes/Horarios"
+import Horarios from "../components/configuracoes/Horarios";
+import { toast } from 'react-toastify';
 
 import { useState, useEffect } from "react";
-import { useParams, Navigate } from "react-router"
+import { useParams, Navigate } from "react-router-dom"
 import { useAuth } from "../context/authContext";
 
 export default function Configuracoes() {

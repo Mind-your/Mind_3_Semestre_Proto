@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { useState, useEffect, useRef } from 'react'
 import { HiOutlineUser, HiOutlineSearch } from "react-icons/hi";
@@ -57,9 +57,6 @@ export default function NavDesktop() {
                         <>
                             <NavLink to="/home">
                                 <HiOutlineSearch id="search-icon-btn" className="icon-ui" />
-                            </NavLink>
-                            <NavLink to={`/${user.tipo}/perfil/${user.id}`}>
-                                <HiOutlineUser id="user-icon-btn" className="icon-ui" />
                             </NavLink>
                         </>
                     )}

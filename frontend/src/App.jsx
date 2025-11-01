@@ -34,8 +34,6 @@
             <Route path="termos-e-condicoes" element={<TermosCondicoes />} />
             <Route path="/perfil/psicologo/:id" element={<PerfilPublicoPsicologo />} />
 
-
-
             {/* Rotas de autenticação */}
             <Route path='login=0' element={<Login />} />
             <Route path='login=1' element={<Login />} />
