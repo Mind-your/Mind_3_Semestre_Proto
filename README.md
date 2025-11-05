@@ -74,7 +74,7 @@ Para rodar o projeto localmente, siga os passos abaixo:
 
 Após a inicialização de ambos, o fluxo de cadastro e login deve funcionar corretamente.
 
-#Projeto Mind_3_Semestre_Proto
+# Projeto Mind_3_Semestre_Proto
 
 Este projeto é uma aplicação **Backend** desenvolvida utilizando o **Spring Boot**, um framework que simplifica a criação de aplicações Spring, com foco em microsserviços e desenvolvimento rápido.
 
