@@ -122,14 +122,14 @@ O Spring Framework é fortemente baseado em design patterns, e este projeto demo
 | **MVC (Model-View-Controller)** | Separa a aplicação em três partes interconectadas: a lógica de dados (Model), a interface do usuário (View) e a lógica de controle (Controller). | O projeto implementa a camada **Model** (`Paciente`, `Psicologo`, `Produto`) e a camada **Controller** (`PacienteController`, etc.). A camada **View** é omitida, pois o projeto é uma API RESTful que retorna dados (JSON) em vez de páginas HTML. |
 | **Camadas (Layered Architecture)** | Organiza o código em camadas horizontais (Apresentação, Lógica de Negócio, Persistência) com responsabilidades bem definidas. | O projeto segue claramente esta arquitetura: **Controller** (Apresentação/API), **Repository** (Persistência) e, implicitamente, a lógica de negócio dentro dos *Controllers* (como a criptografia de senha e validação de login). |
 
-### 2.2. Padrões de Criação (Creational Patterns)
+### 2.3. Padrões de Criação (Creational Patterns)
 
 | Padrão | Descrição | Aplicação no Projeto |
 | :--- | :--- | :--- |
 | **Factory Method / Abstract Factory** | Define uma interface para criar um objeto, mas permite que as subclasses decidam qual classe instanciar. | O Spring Data (ex: `MongoRepository`) atua como uma **Factory** que cria implementações concretas dos *Repositories* em tempo de execução, sem que o desenvolvedor precise escrever o código de fábrica. |
 | **Template Method** | Define o esqueleto de um algoritmo em uma operação, delegando alguns passos para subclasses. | O Spring Data utiliza o **Template Method** em suas classes de template (como `MongoTemplate` internamente) para definir o fluxo de operações de banco de dados, permitindo que o desenvolvedor personalize apenas os passos necessários (como a criação de métodos de consulta personalizados). |
 
-### 2.3. Padrões Estruturais (Structural Patterns)
+### 2.4. Padrões Estruturais (Structural Patterns)
 
 | Padrão | Descrição | Aplicação no Projeto |
 | :--- | :--- | :--- |
@@ -137,7 +137,7 @@ O Spring Framework é fortemente baseado em design patterns, e este projeto demo
 | **Proxy** | Fornece um substituto ou um espaço reservado para outro objeto para controlar o acesso a ele. | O Spring Data usa o padrão **Proxy** para criar implementações de `Repository` em tempo de execução. O objeto que você injeta (`PacienteRepository`) é, na verdade, um *Proxy* que adiciona a lógica de transação e persistência. |
 | **Decorator** | Anexa responsabilidades adicionais a um objeto dinamicamente. | O Spring usa o **Decorator** em muitos lugares, como em *wrappers* de *DataSource* para adicionar recursos como *pooling* de conexões ou em objetos de segurança para adicionar informações de autenticação. |
 
-### 2.4. Padrões Comportamentais (Behavioral Patterns)
+### 2.5. Padrões Comportamentais (Behavioral Patterns)
 
 | Padrão | Descrição | Aplicação no Projeto |
 | :--- | :--- | :--- |
