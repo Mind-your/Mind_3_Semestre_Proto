@@ -13,7 +13,7 @@ export default function NavDesktop() {
 
     const handleLogout = () => {
         logout();
-        navigate("/login=0");
+        navigate("landing");
     };
 
     // 🔽 Fecha o dropdown ao clicar fora

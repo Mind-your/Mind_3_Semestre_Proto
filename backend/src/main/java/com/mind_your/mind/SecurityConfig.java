@@ -70,9 +70,20 @@ public class SecurityConfig {
             .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // Endpoints de autenticação
-                .requestMatchers("/api/auth/**", "/pacientes/login", "/pacientes/cadastrar", "/psicologos/login", "/psicologos/cadastrar").permitAll()
+                // Endpoints públicos - autenticação e cadastro
+                .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/pacientes/login", "/pacientes/cadastrar").permitAll()
+                .requestMatchers("/psicologos/login", "/psicologos/cadastrar").permitAll()
+                .requestMatchers("/voluntarios/login", "/voluntarios/cadastrar").permitAll()
+                
+                // Testes
                 .requestMatchers("/api/test/**").permitAll()
+                
+                // Imagens públicas
+                .requestMatchers("/api/images/**").permitAll()
+                
+                // Listar psicólogos - PERMITIR SEM AUTENTICAÇÃO
+                .requestMatchers(HttpMethod.GET, "/psicologos").permitAll()
                 
                 // Swagger/OpenAPI endpoints
                 .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()

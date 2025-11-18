@@ -27,8 +27,17 @@
         <Routes>
           <Route path="/" element={<MainLayout />}>
             {/* Rotas públicas */}
+            <Route path="/landing" element={<LandingPage />} />
             <Route index element={<LandingPage />} />
-            <Route path="home" element={<Home />} />
+            <Route
+              path="home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+
             <Route path="artigos" element={<Artigos />} />
             <Route path="sobre-nos" element={<SobreNos />} />
             <Route path="termos-e-condicoes" element={<TermosCondicoes />} />

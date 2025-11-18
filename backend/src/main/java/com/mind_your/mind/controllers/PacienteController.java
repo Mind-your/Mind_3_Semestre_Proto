@@ -13,11 +13,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 
 @RestController
@@ -148,4 +156,84 @@ public ResponseEntity<Paciente> atualizar(@PathVariable String id, @RequestBody 
     return ResponseEntity.ok(paciente);
 }
 
+@PostMapping("/{id}/imagem")
+    public ResponseEntity<?> uploadImagem(
+            @PathVariable String id, 
+            @RequestParam("imagem") MultipartFile file) {
+        
+        System.out.println("Recebido upload para paciente ID: " + id);
+        System.out.println("Nome do arquivo: " + file.getOriginalFilename());
+        System.out.println("Tamanho: " + file.getSize() + " bytes");
+        
+        try {
+            // Validar se o arquivo é uma imagem
+            String contentType = file.getContentType();
+            System.out.println("Content-Type: " + contentType);
+            
+            if (contentType == null || !contentType.startsWith("image/")) {
+                return ResponseEntity.badRequest().body("Arquivo deve ser uma imagem");
+            }
+
+            // Validar tamanho (máximo 5MB)
+            if (file.getSize() > 5 * 1024 * 1024) {
+                return ResponseEntity.badRequest().body("Imagem deve ter no máximo 5MB");
+            }
+
+            // Buscar paciente
+            Optional<Paciente> pacienteOpt = pacienteRepository.findById(id);
+            if (pacienteOpt.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            Paciente paciente = pacienteOpt.get();
+
+            // Criar diretório se não existir
+            Path uploadPath = Paths.get("uploads/users-pictures").toAbsolutePath().normalize();
+            Files.createDirectories(uploadPath);
+            System.out.println("Diretório de upload: " + uploadPath);
+
+            // Deletar imagem antiga se existir
+            if (paciente.getImgPerfil() != null && !paciente.getImgPerfil().isEmpty()) {
+                try {
+                    Path oldImagePath = uploadPath.resolve(paciente.getImgPerfil());
+                    Files.deleteIfExists(oldImagePath);
+                    System.out.println("Imagem antiga deletada");
+                } catch (Exception e) {
+                    System.out.println("Não foi possível deletar imagem antiga");
+                }
+            }
+
+            // Gerar nome único para o arquivo
+            String originalFilename = file.getOriginalFilename();
+            String extension = originalFilename != null && originalFilename.contains(".") 
+                ? originalFilename.substring(originalFilename.lastIndexOf("."))
+                : ".png";
+            
+            String filename = "perfil-" + paciente.getLogin() + "-" + UUID.randomUUID().toString().substring(0, 8) + extension;
+            System.out.println("Nome do arquivo gerado: " + filename);
+
+            // Salvar arquivo
+            Path targetLocation = uploadPath.resolve(filename);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println("Arquivo salvo em: " + targetLocation);
+
+            // Atualizar banco de dados
+            paciente.setImgPerfil(filename);
+            pacienteRepository.save(paciente);
+            
+            System.out.println("Imagem salva com sucesso: " + filename);
+            System.out.println("Paciente atualizado no banco");
+
+            return ResponseEntity.ok(Map.of(
+                "mensagem", "Imagem enviada com sucesso",
+                "imgPerfil", filename
+            ));
+
+        } catch (Exception e) {
+            System.err.println("Erro no upload: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Erro ao fazer upload da imagem: " + e.getMessage());
+        }
+    }
+    
 }

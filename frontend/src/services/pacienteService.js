@@ -87,7 +87,7 @@ export async function buscarPorId(id) {
     return res.json();
 }
 
-// Atualizar usuário (com autenticação) ✅
+// Atualizar usuário (com autenticação)
 export async function atualizar(id, camposAtualizados) {
     const res = await authService.authenticatedFetch(`${API_URL}/${id}`, {
         method: "PUT",
@@ -101,7 +101,7 @@ export async function atualizar(id, camposAtualizados) {
     return res.json();
 }
 
-// Deletar usuário (com autenticação) ✅
+// Deletar usuário (com autenticação)
 export async function deletar(id) {
     const res = await authService.authenticatedFetch(`${API_URL}/${id}`, {
         method: "DELETE",
@@ -121,17 +121,22 @@ export async function uploadImagem(id, file) {
 
     const token = authService.getToken();
     
+    if (!token) {
+        throw new Error("Não autenticado");
+    }
+    
     const res = await fetch(`${API_URL}/${id}/imagem`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
         },
         body: formData
-        // Não adicionar Content-Type, o browser define automaticamente com boundary
+        // NÃO adicionar Content-Type, o browser define automaticamente com boundary
     });
 
     if (!res.ok) {
-        throw new Error("Erro ao fazer upload da imagem");
+        const errorText = await res.text();
+        throw new Error(errorText || "Erro ao fazer upload da imagem");
     }
 
     return res.json();

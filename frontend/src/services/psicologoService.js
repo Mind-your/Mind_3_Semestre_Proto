@@ -32,9 +32,9 @@ export async function registerPsicologo(userData) {
     return res.json();
 }
 
-// ✅ Listar todos os psicólogos (com autenticação)
+// Listar todos os psicólogos (SEM autenticação - endpoint público)
 export async function listarTodos() {
-    const res = await authService.authenticatedFetch(`${API_URL}`);
+    const res = await fetch(`${API_URL}`);
 
     if (!res.ok) {
         throw new Error("Erro ao listar psicólogos");
@@ -121,16 +121,22 @@ export async function uploadImagem(id, file) {
 
     const token = authService.getToken();
 
+    if (!token) {
+        throw new Error("Não autenticado");
+    }
+
     const res = await fetch(`${API_URL}/${id}/imagem`, {
         method: "POST",
         headers: {
             "Authorization": `Bearer ${token}`
         },
         body: formData
+        // NÃO adicionar Content-Type, o browser define automaticamente com boundary
     });
 
     if (!res.ok) {
-        throw new Error("Erro ao fazer upload da imagem");
+        const errorText = await res.text();
+        throw new Error(errorText || "Erro ao fazer upload da imagem");
     }
 
     return res.json();

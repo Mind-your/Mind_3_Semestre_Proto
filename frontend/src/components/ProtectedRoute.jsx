@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children, requirePsicologo = false }) {
 
     // Se não está autenticado, redirecionar para login
     if (!isAuthenticated) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/login=0" replace />;
     }
 
     // Se a rota requer psicólogo mas o usuário não é psicólogo

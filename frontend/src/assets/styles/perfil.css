@@ -37,13 +37,13 @@
 }
 
 /* Foto e informações */
-.foto-perfil {
+.foto-perfil, #perfilFoto {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
-.foto-perfil img {
+.foto-perfil img, #perfilFoto img {
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -417,14 +417,6 @@
     box-sizing: border-box;
   }
 
-  .foto-perfil {
-    gap: 10px;
-  }
-
-  .foto-perfil img {
-    width: 70px;
-    height: 70px;
-  }
 
   .info-perfil h3 {
     font-size: 0.8rem;
@@ -548,14 +540,9 @@
     padding: 10px;
   }
 
-  .foto-perfil {
-    gap: 10px;
-  }
 
-  .foto-perfil img {
-    width: 70px;
-    height: 70px;
-  }
+
+
 
   .info-perfil h3 {
     font-size: 0.8rem;

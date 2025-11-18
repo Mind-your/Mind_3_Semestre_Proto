@@ -1,7 +1,22 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import * as psicologoService from '../services/psicologoService';
 
 const PsicologosContext = createContext(null);
+
+// Função para listar psicólogos SEM autenticação
+async function listarPsicologosSemAuth() {
+  const response = await fetch('http://localhost:8080/psicologos', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error('Erro ao buscar psicólogos');
+  }
+
+  return response.json();
+}
 
 export function PsicologosProvider({ children }) {
   const [psicologos, setPsicologos] = useState([]);
@@ -13,7 +28,7 @@ export function PsicologosProvider({ children }) {
     async function carregarPsicologos() {
       try {
         setLoading(true);
-        const dados = await psicologoService.listarTodos();
+        const dados = await listarPsicologosSemAuth();
         
         // Transformar os dados do backend para o formato esperado pelos componentes
         const psicologosFormatados = dados.map(p => ({
@@ -58,7 +73,7 @@ export function PsicologosProvider({ children }) {
   async function recarregar() {
     try {
       setLoading(true);
-      const dados = await psicologoService.listarTodos();
+      const dados = await listarPsicologosSemAuth();
       
       const psicologosFormatados = dados.map(p => ({
         id: p.id,

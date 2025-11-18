@@ -4,40 +4,64 @@ import InfosGerais from "../components/configuracoes/InfosGerais"
 import AtualizacaoCredenciais from "../components/configuracoes/AtualizacaoCredenciais"
 import InfosPerfil from "../components/configuracoes/InfosPerfil"
 import Deletar from "../components/pop-ups/Deletar"
-import PhotoDefault from "../assets/img/perfil-default.png"
 import Horarios from "../components/configuracoes/Horarios";
 import { toast } from 'react-toastify';
+import { getImageUrl, getDefaultAvatar } from "../utils/imageHelper";
 
 import { useState, useEffect } from "react";
 import { useParams, Navigate, useNavigate } from "react-router-dom"
 import { useAuth } from "../context/authContext";
-import { atualizar, deletar } from "../services/pacienteService";
-import { atualizar as atualizarPsicologo, deletar as deletarPsicologo } from "../services/psicologoService";
+import { atualizar, deletar, uploadImagem } from "../services/pacienteService";
+import { atualizar as atualizarPsicologo, deletar as deletarPsicologo, uploadImagem as uploadImagemPsicologo } from "../services/psicologoService";
 
 export default function Configuracoes() {
     const navigate = useNavigate();
     const { user, loading, updateUser, logout } = useAuth();
-    const [imgPerfil, setImgPerfil] = useState(PhotoDefault);
+    const [imgPerfil, setImgPerfil] = useState('');
+    const [novaImagem, setNovaImagem] = useState(null); // Armazena o arquivo selecionado
+    const [imageError, setImageError] = useState(false); // Controla se houve erro ao carregar imagem
     const [isOpen, setIsOpen] = useState(false);
     const [salvando, setSalvando] = useState(false);
     const [deletando, setDeletando] = useState(false);
     const { tipo, id } = useParams();
 
+    // Carregar imagem do servidor quando o componente montar ou user mudar
     useEffect(() => {
+        setImageError(false); // Resetar erro ao mudar de usuário
         if (user?.imgPerfil) {
-            setImgPerfil(user.imgPerfil);
+            setImgPerfil(getImageUrl(user.imgPerfil));
+        } else {
+            setImgPerfil(getImageUrl(null));
         }
     }, [user]);
 
-    const chooseImgPerfil = (img) => {
-        const file = img.target.files[0];
-        const formData = new FormData();
+    const chooseImgPerfil = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
+        console.log('Imagem selecionada:', file.name);
+
+        // Validar tamanho (máximo 5MB)
+        if (file.size > 5 * 1024 * 1024) {
+            toast.error('A imagem deve ter no máximo 5MB');
+            return;
+        }
+
+        // Validar tipo
+        if (!file.type.startsWith('image/')) {
+            toast.error('Por favor, selecione uma imagem válida');
+            return;
+        }
+
+        // Armazenar o arquivo para upload posterior
+        setNovaImagem(file);
+
+        // Criar preview local da nova imagem
         const imageUrl = URL.createObjectURL(file);
         setImgPerfil(imageUrl);
+        setImageError(false); // Resetar erro ao selecionar nova imagem
 
-        formData.append('imagem', file);
-        console.log(imageUrl);
+        console.log('Preview criado. Arquivo será enviado ao clicar em "Atualizar perfil"');
     }
 
     const handleAtualizarPerfil = async (e) => {
@@ -45,7 +69,39 @@ export default function Configuracoes() {
         setSalvando(true);
 
         try {
-            // Capturar dados dos inputs
+            // PRIMEIRO: Upload da imagem se houver uma nova
+            let nomeImagemAtualizada = user.imgPerfil; // Mantém a imagem atual por padrão
+            
+            if (novaImagem) {
+                console.log('Fazendo upload da nova imagem...');
+                
+                try {
+                    let uploadResponse;
+                    if (user.tipo === 'psicologo') {
+                        uploadResponse = await uploadImagemPsicologo(user.id, novaImagem);
+                    } else {
+                        uploadResponse = await uploadImagem(user.id, novaImagem);
+                    }
+                    
+                    console.log('Upload concluído:', uploadResponse);
+                    
+                    if (uploadResponse && uploadResponse.imgPerfil) {
+                        nomeImagemAtualizada = uploadResponse.imgPerfil;
+                        console.log('Nova imagem salva:', nomeImagemAtualizada);
+                    }
+                } catch (uploadError) {
+                    console.error('Erro no upload da imagem:', uploadError);
+                    toast.error('Erro ao fazer upload da imagem: ' + uploadError.message);
+                    // Continua para salvar os outros dados mesmo se a imagem falhar
+                }
+                
+                // Limpar o arquivo temporário
+                setNovaImagem(null);
+            }
+
+            // SEGUNDO: Atualizar os outros dados do perfil
+            console.log('Atualizando dados do perfil...');
+            
             const dadosAtualizados = {
                 // Informações Gerais
                 nome: document.getElementById('nomeEdit')?.value || user.nome,
@@ -63,6 +119,9 @@ export default function Configuracoes() {
                 sobreMim: document.getElementById('sobreMimEdit')?.value || user.sobreMim,
                 medicamentos: document.getElementById('medicamentosEdit')?.value || user.medicamentos,
                 preferencias: document.getElementById('preferenciasEdit')?.value || user.preferencias,
+                
+                // Manter a imagem atualizada (ou a atual se não houve upload)
+                imgPerfil: nomeImagemAtualizada
             };
 
             // Só adicionar senha se foi preenchida
@@ -79,6 +138,8 @@ export default function Configuracoes() {
                 usuarioAtualizado = await atualizar(user.id, dadosAtualizados);
             }
             
+            console.log('Dados atualizados:', usuarioAtualizado);
+            
             // Atualizar contexto local
             if (updateUser) {
                 updateUser({ ...usuarioAtualizado, tipo: user.tipo });
@@ -89,6 +150,12 @@ export default function Configuracoes() {
             // Limpar campo de senha
             const senhaInput = document.getElementById('senhaEdit');
             if (senhaInput) senhaInput.value = '';
+            
+            // Atualizar a imagem do preview com a URL do servidor
+            if (nomeImagemAtualizada) {
+                setImgPerfil(getImageUrl(nomeImagemAtualizada));
+                setImageError(false); // Resetar erro após upload bem-sucedido
+            }
 
         } catch (error) {
             console.error('Erro ao atualizar:', error);
@@ -155,16 +222,35 @@ export default function Configuracoes() {
             <div className="container-section">
                 <div className="container-img">
                     <div className="img-options">
-                        <img id="imagePreview" src={imgPerfil} alt="" className="imgEdit"/>
+                        <img 
+                            id="imagePreview" 
+                            src={imageError ? getDefaultAvatar() : imgPerfil} 
+                            alt="Foto de perfil" 
+                            className="imgEdit"
+                            onError={(e) => {
+                                if (!imageError) {
+                                    console.warn('Imagem não encontrada:', imgPerfil);
+                                    console.warn('Carregando imagem padrão (base64)');
+                                    setImageError(true);
+                                }
+                            }}
+                        />
                         <div>
                             <input 
                                 id="file-image" 
                                 type="file" 
                                 accept="image/*" 
-                                onChange={(e) => chooseImgPerfil(e)}
-                                required/>
-                            <label className="btns button-confirm" htmlFor="file-image">Mudar Foto</label>
+                                onChange={chooseImgPerfil}
+                            />
+                            <label className="btns button-confirm" htmlFor="file-image">
+                                {novaImagem ? 'Foto Selecionada' : 'Mudar Foto'}
+                            </label>
                         </div>
+                        {novaImagem && (
+                            <small style={{ display: 'block', marginTop: '5px', color: '#666' }}>
+                                Clique em "Atualizar perfil" para salvar
+                            </small>
+                        )}
                     </div>
                     <div className="atalhos">
                         <a href="#formAtualizar" id="Geral">Geral</a>
