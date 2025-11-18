@@ -1,6 +1,7 @@
 import SearchSection from "../components/home-page/SearchSection";
 import AreaCards from "../components/home-page/AreaCards";
 import VerPsi from "../components/pop-ups/Verpsi";
+import ActiveFilters from "../components/home-page/ActiveFilters";
 import { useState } from "react";
 import { usePsicologos } from "../context/psicologos";
 import '../assets/styles/home/filtros-home.css';
@@ -13,12 +14,14 @@ export default function Home() {
   const [visualizacao, setVisualizacao] = useState("col");
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedRatings, setSelectedRatings] = useState([]);
+  const [searchText, setSearchText] = useState(""); // Texto de busca
   // Cards
   const [openPsi, setOpenPsi] = useState(false);
   const [selectedPerfil, setSelectedPerfil] = useState(null);
 
-  const { psicologos } = usePsicologos();
+  const { psicologos, loading, error } = usePsicologos();
 
+  // Mapear os dados dos psicólogos
   const perfis = (psicologos || []).map(p => ({
       id: p.id,
       nome: p.nome,
@@ -26,18 +29,93 @@ export default function Home() {
       local: p.local,
       tags: p.tags || [],
       foto: p.foto || null,
-      horarios: p.horarios || {}
+      horarios: p.horarios || {},
+      // Dados extras disponíveis
+      email: p.email,
+      telefone: p.telefone,
+      genero: p.genero,
+      crp: p.crp,
+      sobreMim: p.sobreMim
   }));
 
+  // Extrair locais únicos dos perfis
   const locais = [...new Set(perfis.map(perfil => perfil.local))];
 
+  // Aplicar filtros
   const perfisFiltrados = perfis.filter(perfil => {
+      // Filtro de texto (busca por nome, especialidade, local)
+      const matchTexto = searchText.trim() === "" || 
+        perfil.nome.toLowerCase().includes(searchText.toLowerCase()) ||
+        perfil.local.toLowerCase().includes(searchText.toLowerCase()) ||
+        perfil.tags.some(tag => tag.toLowerCase().includes(searchText.toLowerCase())) ||
+        (perfil.sobreMim && perfil.sobreMim.toLowerCase().includes(searchText.toLowerCase())) ||
+        (perfil.crp && perfil.crp.toLowerCase().includes(searchText.toLowerCase()));
+      
       const matchEspecialidade = selectedSpecialities.length === 0
           || perfil.tags.some(tag => selectedSpecialities.includes(tag));
       const matchLocal = selectedLocals.length === 0
           || selectedLocals.includes(perfil.local);
-      return matchEspecialidade && matchLocal;
+      
+      return matchTexto && matchEspecialidade && matchLocal;
   });
+
+  // Exibir estado de carregamento
+  if (loading) {
+    return (
+      <>
+        <SearchSection 
+          selectedSpecialities={selectedSpecialities}
+          setSelectedSpecialities={setSelectedSpecialities}
+          selectedLocals={selectedLocals}
+          setSelectedLocals={setSelectedLocals}
+          locais={locais}
+          selectedRatings={selectedRatings}
+          setSelectedRatings={setSelectedRatings}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
+          visualizacao={visualizacao}
+          setVisualizacao={setVisualizacao}
+        />
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '3rem', 
+          fontSize: '1.1rem',
+          color: '#666' 
+        }}>
+          Carregando psicólogos...
+        </div>
+      </>
+    );
+  }
+
+  // Exibir erro se houver
+  if (error) {
+    return (
+      <>
+        <SearchSection 
+          selectedSpecialities={selectedSpecialities}
+          setSelectedSpecialities={setSelectedSpecialities}
+          selectedLocals={selectedLocals}
+          setSelectedLocals={setSelectedLocals}
+          locais={locais}
+          selectedRatings={selectedRatings}
+          setSelectedRatings={setSelectedRatings}
+          selectedDays={selectedDays}
+          setSelectedDays={setSelectedDays}
+          visualizacao={visualizacao}
+          setVisualizacao={setVisualizacao}
+        />
+        <div style={{ 
+          textAlign: 'center', 
+          padding: '3rem', 
+          fontSize: '1.1rem',
+          color: '#d32f2f' 
+        }}>
+          Erro ao carregar psicólogos: {error}
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -53,6 +131,8 @@ export default function Home() {
         setSelectedDays={setSelectedDays}
         visualizacao={visualizacao}
         setVisualizacao={setVisualizacao}
+        searchText={searchText}
+        setSearchText={setSearchText}
       />
       <AreaCards
         perfis={perfisFiltrados} 

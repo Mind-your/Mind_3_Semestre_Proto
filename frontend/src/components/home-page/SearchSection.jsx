@@ -8,7 +8,8 @@ export default function SearchSection({
     selectedLocals, setSelectedLocals, locais,     // para filtro de localidades
     selectedRatings, setSelectedRatings,           // para filtro de notas
     selectedDays, setSelectedDays,                 // para filtro de dias da semana
-    visualizacao, setVisualizacao                  // para visualizacao da posicao dos cards
+    visualizacao, setVisualizacao,                 // para visualizacao da posicao dos cards
+    searchText, setSearchText                      // para busca por texto
 }) {
     
     const specialities = [
@@ -36,12 +37,32 @@ export default function SearchSection({
         "Domingo",
     ];
 
+    const handleSearch = (e) => {
+        setSearchText(e.target.value);
+    };
+
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        // A busca já acontece automaticamente via onChange
+        // Mas podemos adicionar lógica adicional aqui se necessário
+    };
+
     return (
         <>
             <section className="section-filters-searchbox">
                 <div className="search-boxes">
-                    <input type="text" required id="search-input" placeholder="Pesquisar" />
-                    <HiOutlineSearch className="icon-ui button-search" />
+                    <form onSubmit={handleSearchSubmit} style={{ display: 'flex', width: '100%' }}>
+                        <input 
+                            type="text" 
+                            id="search-input" 
+                            placeholder="Pesquisar por nome, especialidade, local..." 
+                            value={searchText}
+                            onChange={handleSearch}
+                        />
+                        <button type="submit" style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+                            <HiOutlineSearch className="icon-ui button-search" />
+                        </button>
+                    </form>
                 </div>
                 <div className="search-filters">
                     <Filtro

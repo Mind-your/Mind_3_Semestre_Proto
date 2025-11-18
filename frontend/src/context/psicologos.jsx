@@ -1,76 +1,99 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import * as psicologoService from '../services/psicologoService';
 
-// Contexto temporário com dados de psicólogos para desenvolvimento
 const PsicologosContext = createContext(null);
 
-const consultasPadrao = {
-  "2025-10-21": ["12:13", "14:30"],
-  "2025-10-22": ["10:15"],
-  "2025-10-24": ["09:00", "10:00", "16:45"],
-  "2025-10-25": ["21:00"]
-};
-
-const psicologosInit = [
-  {
-    id: 1,
-    nome: "Robson",
-    idade: "229",
-    local: "Santo andre",
-    tags: ["Ansiedade", "Conflitos Familiares"],
-    foto: null,
-    horarios: consultasPadrao
-  },
-  {
-    id: 2,
-    nome: "Matheus",
-    idade: "29",
-    local: "SBC - SP",
-    tags: ["Casais", "Socialidade"],
-    foto: null,
-    horarios: consultasPadrao
-  },
-  {
-    id: 3,
-    nome: "Alice",
-    idade: "29",
-    local: "Diadema",
-    tags: ["Ansiedade", "Conflitos Familiares"],
-    foto: null,
-    horarios: consultasPadrao
-  },
-  {
-    id: 4,
-    nome: "Bruna",
-    idade: "29",
-    local: "São Paulo",
-    tags: ["Burnout", "Insonia"],
-    foto: null,
-    horarios: consultasPadrao
-  },
-  {
-    id: 5,
-    nome: "Carlos",
-    idade: "29",
-    local: "Campinas",
-    tags: ["Dependencia Química", "Ansiedade"],
-    foto: null,
-    horarios: consultasPadrao
-  }
-];
-
 export function PsicologosProvider({ children }) {
-  const [psicologos] = useState(psicologosInit);
+  const [psicologos, setPsicologos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Buscar psicólogos do backend ao montar o componente
+  useEffect(() => {
+    async function carregarPsicologos() {
+      try {
+        setLoading(true);
+        const dados = await psicologoService.listarTodos();
+        
+        // Transformar os dados do backend para o formato esperado pelos componentes
+        const psicologosFormatados = dados.map(p => ({
+          id: p.id,
+          nome: `${p.nome} ${p.sobrenome}`.trim(),
+          idade: p.idade?.toString() || "N/A",
+          local: p.endereco || "Local não informado",
+          tags: p.especialidade ? [p.especialidade] : [],
+          foto: p.imgPerfil || null,
+          horarios: {}, // Pode ser implementado posteriormente
+          // Dados adicionais que podem ser úteis
+          email: p.email,
+          telefone: p.telefone,
+          genero: p.genero,
+          crp: p.crp,
+          sobreMim: p.sobreMim
+        }));
+        
+        setPsicologos(psicologosFormatados);
+        setError(null);
+      } catch (err) {
+        console.error("Erro ao carregar psicólogos:", err);
+        setError(err.message);
+        setPsicologos([]); // Manter array vazio em caso de erro
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    carregarPsicologos();
+  }, []);
 
   function getById(id) {
     return psicologos.find(p => p.id === id) || null;
   }
 
   function getByName(nome) {
-    return psicologos.find(p => p.nome === nome) || null;
+    return psicologos.find(p => p.nome.toLowerCase().includes(nome.toLowerCase())) || null;
+  }
+
+  // Função para recarregar os dados (útil após atualizações)
+  async function recarregar() {
+    try {
+      setLoading(true);
+      const dados = await psicologoService.listarTodos();
+      
+      const psicologosFormatados = dados.map(p => ({
+        id: p.id,
+        nome: `${p.nome} ${p.sobrenome}`.trim(),
+        idade: p.idade?.toString() || "N/A",
+        local: p.endereco || "Local não informado",
+        tags: p.especialidade ? [p.especialidade] : [],
+        foto: p.imgPerfil || null,
+        horarios: {},
+        email: p.email,
+        telefone: p.telefone,
+        genero: p.genero,
+        crp: p.crp,
+        sobreMim: p.sobreMim
+      }));
+      
+      setPsicologos(psicologosFormatados);
+      setError(null);
+    } catch (err) {
+      console.error("Erro ao recarregar psicólogos:", err);
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
-    <PsicologosContext.Provider value={{ psicologos, getById, getByName }}>
+    <PsicologosContext.Provider value={{ 
+      psicologos, 
+      loading, 
+      error, 
+      getById, 
+      getByName,
+      recarregar 
+    }}>
       {children}
     </PsicologosContext.Provider>
   );
